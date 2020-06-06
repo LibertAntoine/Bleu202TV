@@ -1,11 +1,16 @@
 
 const express = require('express');
-
 const bodyParser = require('body-parser');
-/*
 const mongoose = require('mongoose');
 require('dotenv').config(); // Manage .env file
-*/
+
+
+// Database connexion
+mongoose.connect('mongodb+srv://AntoineLibert:'+ process.env.PASSWORD +'@bleu202tv-zwssb.mongodb.net/<dbname>?retryWrites=true&w=majority',
+  { useNewUrlParser: true,
+    useUnifiedTopology: true })
+  .then(() => console.log('Connexion à MongoDB réussie !'))
+  .catch((e) => console.log('Connexion à MongoDB échouée !' + e));
 
 const app = express();
 
