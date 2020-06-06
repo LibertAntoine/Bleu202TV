@@ -1,16 +1,16 @@
-
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 require('dotenv').config(); // Manage .env file
 
+const userRoutes = require('./routes/user');
 
 // Database connexion
 mongoose.connect('mongodb+srv://AntoineLibert:'+ process.env.PASSWORD +'@bleu202tv-zwssb.mongodb.net/<dbname>?retryWrites=true&w=majority',
   { useNewUrlParser: true,
     useUnifiedTopology: true })
-  .then(() => console.log('Connexion à MongoDB réussie !'))
-  .catch((e) => console.log('Connexion à MongoDB échouée !' + e));
+  .then(() => console.log('MongoDB connection succeed !'))
+  .catch((e) => console.log('MongoDB connection failed ! ' + e));
 
 const app = express();
 
@@ -23,5 +23,7 @@ app.use((req, res, next) => {
   });
 
 app.use(bodyParser.json()); // Parse the content of the request  
+
+app.use('/api/auth', userRoutes);
 
 module.exports = app;
