@@ -9,7 +9,7 @@
       <sui-modal-header id="headerVideo">Video du jour
         <i id="closeX" class="x icon" @click="toggle"></i>
       </sui-modal-header>
-
+<div></div>
       <sui-modal-content image id="videoContent">
       <iframe src="https://player.vimeo.com/video/304402648?color=0f87f2&title=0&byline=0&portrait=0&fun=0&controls=1" 
       width="100%" height="100%" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
