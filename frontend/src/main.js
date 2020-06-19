@@ -10,6 +10,7 @@ import 'semantic-ui-css/semantic.min.css';
 Vue.use(SuiVue);
 
 import routes from './routes/router';
+
 const router = new VueRouter({
     mode:'history',
     routes
