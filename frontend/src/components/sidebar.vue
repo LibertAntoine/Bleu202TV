@@ -1,5 +1,5 @@
 <template>
-  <div id="sideMenu">
+  <div id="sideMenu" @click="(e) => e.stopPropagation()">
     <div id="openMenu" v-on:click="this.toggle"> 
         <i class="angle double left icon large"></i> 
         Menu
@@ -8,13 +8,14 @@
       <div id="menu" class="ui sidebar visible inverted right vertical menu">
        <a class="item" v-on:click="this.toggle">
           <i class="angle double right icon"></i>
-          Bleu202 TV
+          <span v-if='$parent.connected && $parent.pseudo != ""'> Bonjour {{$parent.pseudo}} </span>
+          <span v-else>Bleu202 TV</span>
         </a>
         <a class="item">
           <i class="star icon"></i>
           Découvrir lèche-vitrine
         </a>
-        <a class="item">
+        <a class="item" @click="toggleQuiSommes">
           <i class="users icon"></i>
           Qui sommes nous ?
         </a>
@@ -25,6 +26,10 @@
         <a class="item">
           <i class="file alternate icon"></i>
           Mentions légales
+        </a>
+        <a class="item" v-if='$parent.connected' @click="this.$parent.logOut">
+          <i class="external alternate icon"></i>
+          Deconnexion
         </a>
         <div id="logos">    
             <a href="http://www.bleu202.com/" onclick="window.open(this.href); return false;">
@@ -39,17 +44,24 @@
         </div>
       </div>
     </div>
+    <quiSommesNous ref="quiSommesNous" />
   </div>
 </template>
 
 <script>
+import quiSommesNous from '@/components/quiSommesNous'
 import $ from "jquery";
 
 export default {
   name: 'sideMenu',
   components: {
+      quiSommesNous
   },
-  watch: {
+  data() {
+    return {
+      connected : false,
+      open: false
+    }
   },
   mounted: function() {
       $('.ui.sidebar').hide()
@@ -57,6 +69,10 @@ export default {
   methods: {
     toggle() {
         $('.ui.sidebar').fadeToggle()
+        this.open = !this.open;
+    },
+    toggleQuiSommes() {
+        this.$refs.quiSommesNous.toggle();
     }
   }
 }
@@ -66,7 +82,7 @@ export default {
 
 #sideMenu {
   position: fixed;
-  z-index: 10;
+  z-index: 1001;
 }
 
 #logoCompagnie {
@@ -99,6 +115,7 @@ export default {
     padding: 10px;
     font-size: 15px;
     font-weight : bold;
+    cursor : pointer;
 }
 
 .sidebar {
