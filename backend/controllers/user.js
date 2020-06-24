@@ -7,15 +7,13 @@ const virus = ["Coronavirus", "Choleravirus", "Betaretrovirus", "Fabavirus", "Ha
 const adj2 = ["Drole", "Glouton", "Silencieux", "Bavard", "Reveur", "Allergique", "Sensible", "Ronchon", "Rieur", "Altruiste"];
 
 exports.signup = async (req, res, next) => {
-    let user = true;
-    let name;
+    let user = true, name;
     while (user) {
-      name = adj1[randomInt(0, 9)] + " " + virus[randomInt(0, 9)] + " "+ adj2[randomInt(0, 9)];
+      name = adj1[randomInt(0, 9)] + " " + virus[randomInt(0, 9)] + " "+ adj2[randomInt(0, 9)]
       user = await User.findOne({ uniqueName: name })
     }
-    console.log(name);
-    const newUser = new User({ ...req.body.user, uniqueName: name });
-    await newUser.save();
+    const newUser = new User({ ...req.body.user, uniqueName: name })
+    await newUser.save()
     res.status(201).json({
       message: 'User create !',
       uniqueName: newUser.uniqueName,
@@ -28,9 +26,7 @@ exports.signup = async (req, res, next) => {
 }
 
 exports.login = async (req, res, next) => {
-    let user
-    user = await User.findOne({ uniqueName: req.body.uniqueName })
-    console.log(user)
+    const user = await User.findOne({ uniqueName: req.body.uniqueName })
     if (!user) {
         res.status(201).json({ error: 'User don\'t find !' }) 
     } else {

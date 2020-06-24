@@ -12,7 +12,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"user\": {\n\t\t\"drink\":\"10\",\n\t\t\"name\":\"bidule\"\n\t}\n}\n",
+					"raw": "{\n\t\"user\": {\n\t\t\"pseudo\":\"bidule\",\n\t\t\"favoriteCharacter\":\"iuoi\",\n\t\t\"favoriteActor\":\"bidule\",\n\t\t\"favoriteDrink\":4,\n\t\t\"favoriteCake\":2,\n\t\t\"astroSigne\":10\n\t}\n}\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -36,15 +36,12 @@
 		},
 		{
 			"name": "login",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
 			"request": {
-				"method": "GET",
+				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"name\": \"bidule\"\n}",
+					"raw": "{\n\t\"uniqueName\": \"Charismatique Choleravirus Glouton\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -61,6 +58,48 @@
 						"api",
 						"auth",
 						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "auth",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{tokenKey}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{domain}}/api/auth/auth",
+					"protocol": "http",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"api",
+						"auth",
+						"auth"
 					]
 				}
 			},
