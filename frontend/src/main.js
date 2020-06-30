@@ -1,10 +1,16 @@
 import Vue from 'vue'
-import App from './App.vue'
+import Vuex from 'vuex'
 import SuiVue from 'semantic-ui-vue';
 import VueRouter from 'vue-router';
+import logStore from '@/services/logStore'
+import datas from '@/services/data'
+
+Vue.prototype.$logStore = logStore
+Vue.prototype.$datas = datas
 
 Vue.config.productionTip = false
 
+Vue.use(Vuex)
 
 import 'semantic-ui-css/semantic.min.css';
 Vue.use(SuiVue);
@@ -19,6 +25,6 @@ const router = new VueRouter({
 Vue.use(VueRouter)
 
 new Vue({
-  render: h => h(App),
+  render: h => h(require('./App').default),
   router
 }).$mount('#app')

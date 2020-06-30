@@ -1,7 +1,7 @@
 <template>
 <div id="videoModal">
     <sui-modal v-model="open">
-      <sui-modal-header id="headerVideo">{{ModalTitle}}
+      <sui-modal-header id="headerVideo">{{ ModalTitle }}
         <i id="closeX" class="x icon" @click="toggle"></i>
       </sui-modal-header>
 
@@ -18,10 +18,9 @@ import player from '@vimeo/player'
 
 export default {
   name: 'modalVideo',
-  components: {
-  },
-  watch : {
-     id : function () {this.InitVideo()}
+props: {
+      nbCanal : {type: String, required : true},
+      totalMute : {type: Boolean, default : false},
   },
   data() {
     return {
@@ -31,21 +30,36 @@ export default {
       videoPlayer: null
     }
   },
+  watch: {
+    totalMute : function() {this.toggleTotalMute()}
+  },
   mounted() {
+    this.id = this.$datas[this.nbCanal].videoId;
+    this.ModalTitle = this.$datas[this.nbCanal].name;
+    this.InitVideo()
   },
   methods: {
     toggle() {
       if(this.open) {
           this.videoPlayer.pause();
+          this.$parent.mute = false;
       } else {
         this.videoPlayer.play();
         this.videoPlayer.on('ended', () => {this.open = false})
+        this.$parent.mute = true;
       }
       this.open = !this.open;
     },
     InitVideo() {
         if(this.videoPlayer) delete(this.videoPlayer)
         this.videoPlayer = new player(this.$refs.iframe)
+    },
+    toggleTotalMute() {
+      if(this.totalMute) {
+        this.videoPlayer.setVolume(0)
+      } else {
+        this.videoPlayer.setVolume(1)
+      }
     }
   }
 }

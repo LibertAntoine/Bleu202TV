@@ -1,6 +1,6 @@
 <template>
 <div id="acceuilModal">
-    <sui-modal ref="modal" id="quizModal" v-model="open">
+    <sui-modal ref="modal" id="quizModal" v-model="open" :closable=false>
       <sui-modal-header id="acceuil-header">
           <i ref='returnIcon' id="returnIcon" class="angle double left small icon" @click="retour"></i> 
           Quel déconfiné es-tu ? 
@@ -225,7 +225,7 @@
           <div ref="bilan" class="question">
           <sui-modal-description id="bilan" >
             <p>Bienvenue à toi {{reponses[5]}}, tu es maintenant prêt pour le monde d'après. Nous sommes heureux de te dicerner ton nom de virus, rien qu'à toi :<p>
-            <p>{{persoName}}<p>
+            <p>{{$logStore.state.uniqueName}}<p>
             <p>Garde-le bien en tête, car il te seras demandez si tu reviens nous voir.<p>
             <div id="acceuil-button">
               <sui-button color="teal" @click='finishClose' size="huge" id="button_right">
@@ -246,11 +246,9 @@
 </template>
 
 <script>
-import userApi from '@/services/api/user'
-import cookie from '@/services/cookies'
 
 export default {
-  name: 'quiz',
+  name: 'quizPage',
   components: {
   },
   data() {
@@ -259,12 +257,8 @@ export default {
         question : 1,
         reponses : [],
         textInput : "",
-        onChange: false,
-        persoName: ""
+        onChange: false
     }
-  },
-  mounted() {
-      this.$refs.modal.closable = false;
   },
   methods: {
     toggle() {
@@ -288,7 +282,7 @@ export default {
       if(!this.onChange) {
         if(this.question == 1) {
           this.open = !this.open;
-          this.$parent.open = true;
+          this.$logStore.state.opener = true;
         } else {
           this.textInput = "";
           this.onChange = true;
@@ -343,22 +337,15 @@ export default {
       setTimeout(() => {
         this.$refs['question' + this.question].style.display = "none" 
       }, 500);
-      const data = await userApi.signup({
-        pseudo : this.reponses[5],
-        favoriteCharacter : this.reponses[3],
-        favoriteActor : this.reponses[4],
-        favoriteDrink : this.reponses[1],
-        favoriteCake : this.reponses[0],
-        astroSigne : this.reponses[2]
-      })
-      cookie.setCookie("token", data.data.token, 15)
-      this.persoName = data.data.uniqueName
-      this.$refs.bilan.style.display = "block"
-      this.$parent.$parent.connection(this.reponses[5]);
-      setTimeout(() => {
-        this.$refs.bilan.style.opacity = 1;
-        this.onChange = false;
-      }, 1000);
+      await this.$logStore.dispatch('signUp', this.reponses)
+      if(this.$logStore.state.connected) {
+        this.$parent.$parent.$refs.scene.$refs.television.zap('0')
+        this.$refs.bilan.style.display = "block"
+        setTimeout(() => {
+          this.$refs.bilan.style.opacity = 1;
+          this.onChange = false;
+        }, 1000);
+        }
       }
     }
   }

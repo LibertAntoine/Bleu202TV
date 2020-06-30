@@ -1,14 +1,14 @@
 <template>
   <div id="sideMenu" @click="(e) => e.stopPropagation()">
-    <div id="openMenu" v-on:click="this.toggle"> 
+    <div id="openMenu" v-if="open == false" v-on:click="this.toggle"> 
         <i class="angle double left icon large"></i> 
         Menu
     </div>  
-    <div class="ui bottom ">
+    <div class="ui bottom" id="menu" ref="menu">
       <div id="menu" class="ui sidebar visible inverted right vertical menu">
        <a class="item" v-on:click="this.toggle">
           <i class="angle double right icon"></i>
-          <span v-if='$parent.connected && $parent.pseudo != ""'> Bonjour {{$parent.pseudo}} </span>
+          <span v-if='$logStore.state.connected && $logStore.state.pseudo != ""'> Bonjour {{$logStore.state.pseudo}} </span>
           <span v-else>Bleu202 TV</span>
         </a>
         <a class="item">
@@ -23,11 +23,11 @@
           <i class="smile icon"></i>
           La Compagnie Bleu 202
         </a>
-        <a class="item">
+        <a class="item" @click="toggleMentions">
           <i class="file alternate icon"></i>
           Mentions légales
         </a>
-        <a class="item" v-if='$parent.connected' @click="this.$parent.logOut">
+        <a class="item" v-if='$logStore.state.connected' @click="logOut()">
           <i class="external alternate icon"></i>
           Deconnexion
         </a>
@@ -44,18 +44,21 @@
         </div>
       </div>
     </div>
-    <quiSommesNous ref="quiSommesNous" />
+    <whoAreWe ref="whoAreWe" />
+    <legalMentions ref="legalMentions" />
   </div>
 </template>
 
 <script>
-import quiSommesNous from '@/components/quiSommesNous'
+import whoAreWe from '@/components/sideMenu/whoAreWe'
+import legalMentions from '@/components/sideMenu/legalMentions'
 import $ from "jquery";
 
 export default {
-  name: 'sideMenu',
+  name: 'sidebar',
   components: {
-      quiSommesNous
+      whoAreWe,
+      legalMentions
   },
   data() {
     return {
@@ -64,16 +67,29 @@ export default {
     }
   },
   mounted: function() {
-      $('.ui.sidebar').hide()
+      $('#menu').hide()
+      window.addEventListener('click', () => {       
+      if(this.open == true) {
+        this.toggle()
+      } })
   },
   methods: {
     toggle() {
-        $('.ui.sidebar').fadeToggle()
+        $('#menu').fadeToggle()
         this.open = !this.open;
     },
     toggleQuiSommes() {
-        this.$refs.quiSommesNous.toggle();
+        this.$refs.whoAreWe.toggle();
+    },
+    toggleMentions() {
+        this.$refs.legalMentions.toggle();
+    },
+    logOut() {
+      this.$logStore.commit('logOut')
+      this.toggle()
+      this.$parent.$refs.scene.$refs.television.zap("-1")
     }
+
   }
 }
 </script>
@@ -113,13 +129,17 @@ export default {
     right: 0%;
     top: 0%;
     padding: 10px;
+    padding-left: 30px;
+    padding-bottom: 30px;
     font-size: 15px;
     font-weight : bold;
     cursor : pointer;
+    background: radial-gradient(at 80% 00%, rgba(black, 0.3) 10%, rgba(black, 0.0) 65%);
 }
 
-.sidebar {
+#menu {
   background-color: #23a1d3 !important;
+  opacity : 0.96
 }
 
 @media (max-height: 400px) {

@@ -16,7 +16,7 @@
 
 <script>
 export default {
-  name: 'quiSommesNous',
+  name: 'whoAreWe',
   components: {
   },
   data() {

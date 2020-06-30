@@ -1,6 +1,6 @@
 <template>
 <div id="acceuilModal">
-    <sui-modal ref="modal" v-model="open">
+    <sui-modal ref="modal" v-model="open" :closable=false>
       <sui-modal-header id="acceuil-header">
         <i id="returnIcon" class="angle double left small icon" @click="retour"></i> 
           Content de te revoir !
@@ -14,7 +14,7 @@
                 <sui-label basic ref="warning" color="red" pointing id="warning">Désolé, je ne reconnais pas ce nom</sui-label>
                 <a ref="buttonQuiz" id="buttonQuiz" @click="goQuiz">J'ai oublié mon nom de virus</a>
                 <sui-input id="logInInput" placeholder="Ecris ton nom..." focus maxlength="40" @input="checkChange"/>
-                <sui-button ref="logButton" color="teal" size="huge" id="buttonLogIn" @click.native="logIn" disabled>
+                <sui-button ref="logButton" color="teal" size="huge" id="buttonLogIn" @click.native="logIn()" disabled>
                 Valider
                 </sui-button>
             </div>
@@ -26,11 +26,8 @@
 </template>
 
 <script>
-import userApi from '@/services/api/user'
-import cookie from '@/services/cookies'
-
 export default {
-  name: 'logIn',
+  name: 'logPage',
   components: {
   },
   data() {
@@ -39,16 +36,13 @@ export default {
         textInput : null
     }
   },
-  mounted() {
-      this.$refs.modal.closable = false;
-  },
   methods: {
     toggle() {
       this.open = !this.open;
     },
     retour() {
-      this.open = !this.open;
-      this.$parent.open = true;
+      this.toggle();
+      this.$logStore.state.opener = true;
     },
     checkChange(e) {
       this.textInput = e
@@ -58,22 +52,21 @@ export default {
         this.$refs.logButton.disabled = true;
       }
     },
-    async logIn() {
-       const data = await userApi.login(this.textInput);
-       if(data.status != 200) {
-         this.$refs.warning.$el.style.opacity = 1
-         setTimeout(() => {
-             this.$refs.warning.$el.style.opacity = 0
-          }, 4000);
-       } else {
-         cookie.setCookie("token", data.data.token, 15)
-         this.$parent.$parent.connection(data.data.user.pseudo)
-         this.open = !this.open;
-       }
-    },
     goQuiz() {
       this.open = !this.open;
-      this.$parent.$refs.quizQuestion.toggle();
+      this.$parent.$refs.quizPage.toggle();
+    },
+    async logIn() {
+      const data = await this.$logStore.dispatch('logIn', this.textInput)
+      if (data.status != 200) {
+        this.$refs.warning.$el.style.opacity = 1
+          setTimeout(() => {
+            this.$refs.warning.$el.style.opacity = 0
+          }, 4000);
+      } else {
+        this.toggle()
+        this.$parent.$parent.$refs.scene.$refs.television.zap('0')
+      }
     }
   }
 }

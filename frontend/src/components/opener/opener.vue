@@ -1,6 +1,6 @@
 <template>
 <div id="acceuilModal">
-    <sui-modal ref="modal" v-model="open">
+    <sui-modal ref="modal" v-model="$logStore.state.opener" :closable=false>
       <sui-modal-header id="acceuil-header">
           Bienvenue sur Bleu 202 TV !
       </sui-modal-header>
@@ -13,7 +13,7 @@
                 <sui-button color="teal" size="huge" id="button_left"  @click.native="goQuiz">
                 Je suis un petit nouveau
                 </sui-button>
-                <sui-button color="teal" size="huge" id="button_right"  @click.native="goLogIn">
+                <sui-button color="teal" size="huge" id="button_right"  @click.native="gologPage">
                 Je suis déjà venu
                 </sui-button>
 
@@ -22,54 +22,38 @@
           
       </sui-modal-content>
     </sui-modal>
-    <logIn ref="logIn" />
-    <quizQuestion ref="quizQuestion" />
+    <logPage ref="logPage" />
+    <quizPage ref="quizPage" />
     
 </div>
 </template>
 
 <script>
-import logIn from '@/components/logIn'
-import quizQuestion from '@/components/quizQuestion'
-import userApi from '@/services/api/user'
-import cookie from '@/services/cookies'
+import logPage from '@/components/opener/logPage'
+import quizPage from '@/components/opener/quizPage'
 
 export default {
-  name: 'acceuil',
+  name: 'opener',
   components: {
-      logIn,
-      quizQuestion
+      logPage,
+      quizPage
   },
-  data() {
-    return {
-        open : false
+  async created() {
+    await this.$logStore.dispatch('logCookie');
+    if(this.$logStore.state.connected) {
+      this.$parent.$refs.scene.$refs.television.zap('0')
+    } else {
+      this.$parent.$refs.scene.$refs.television.zap('-1')
     }
-  },
-  mounted() {
-    this.$refs.modal.closable = false;
-    this.testConnexion()
   },
   methods: {
     goQuiz() {
-      this.open = !this.open;
-      this.$refs.quizQuestion.toggle();
+      this.$logStore.state.opener = false;
+      this.$refs.quizPage.toggle();
     },
-    goLogIn() {
-       this.open = !this.open;
-       this.$refs.logIn.toggle();
-    },
-    async testConnexion() {
-      if(cookie.getCookie("token")) {
-        const data = await userApi.auth(cookie.getCookie("token"))
-        if(data.status != 200) {
-          cookie.deleteCookie("token")
-          this.open = true
-        } else {
-          this.$parent.connection(data.data.user.pseudo);
-        }
-      } else {
-        this.open = true
-      }
+    gologPage() {
+       this.$logStore.state.opener = false;
+       this.$refs.logPage.toggle();
     }
   }
 }
