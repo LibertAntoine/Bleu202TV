@@ -27,7 +27,7 @@ exports.signup = async (req, res, next) => {
 
 exports.login = async (req, res, next) => {
     const user = await User.findOne({ uniqueName: req.body.uniqueName })
-    if (!user) {
+    if (!user || !req.body.uniqueName) {
         res.status(201).json({ error: 'User don\'t find !' }) 
     } else {
         res.status(200).json({
