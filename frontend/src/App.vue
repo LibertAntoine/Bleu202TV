@@ -1,54 +1,33 @@
 <template>
   <div id="app">
-
-    <acceuil ref="acceuil"/>
-    <sideMenu ref="sideMenu" />
-    <TV ref="TV"/>
+      <opener ref="opener"/>
+      <sidebar ref="sidebar" />
+      <scene ref="scene" />
+      <div id="audioMute"> 
+        <i v-show="!totalMute" id="mute" class="bell icon big" @click="() => {totalMute = true;}"></i>
+        <i v-show="totalMute"  id="demute" class="bell slash icon big" @click="() => {totalMute = false}"></i>
+      </div>
   </div>
 </template>
 
 <script>
-import acceuil from './components/acceuil'
-import sideMenu from './components/sidebar'
-import cookie from '@/services/cookies'
+import opener from '@/components/opener/opener'
+import sidebar from '@/components/sideMenu/sidebar'
+import scene from '@/components/mainScene/scene'
 
-import TV from './components/TV'
 
 export default {
   name: 'App',
   components: {
-    sideMenu,
-    TV,
-    acceuil
+    opener,
+    sidebar,
+    scene
   },
   data() {
     return {
-      connected : false,
-      pseudo : ""
+      totalMute : false
     }
   },
-  mounted() {
-    window.addEventListener('click', () => {       
-      if(this.$refs.sideMenu.open == true) {
-        this.$refs.sideMenu.toggle()
-      } })
-  },
-  beforeDestroy: function () {
-  },
-  methods: {
-    connection(pseudo) {
-      this.connected = true
-      this.$refs.TV.zap(1);
-      this.pseudo = pseudo;
-    },
-    logOut() {
-       cookie.deleteCookie("token");
-       this.connected = false;
-       this.pseudo = ""; 
-       this.$refs.TV.zap(0);
-       this.$refs.acceuil.open = true;
-    }
-  }
 }
 </script>
 
@@ -57,6 +36,7 @@ export default {
 body {
   line-height: 0px !important;
   height: 100%;
+  overflow: hidden;
 }
 
 #app {
@@ -65,5 +45,16 @@ body {
   margin-top: 0px !important;
   height : 100%;
   overflow: hidden;
+  position:relative;
 }
+
+#audioMute {
+  position: fixed;
+  left : 0%;
+  padding : 10px;
+  cursor : pointer;
+  color: #23a1d3;
+}
+
+
 </style>
