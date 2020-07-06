@@ -66,6 +66,7 @@ export default {
       } else {
         this.toggle()
         this.$parent.$parent.$refs.scene.$refs.television.zap('0')
+        this.$parent.$parent.toogleOpenSong(this.$datas[5].openConnect)
       }
     }
   }
@@ -141,6 +142,25 @@ export default {
 
 #closeX:hover {
   opacity: 100%;
+}
+
+
+@media (max-width: 658px) {
+  #logInInput {
+    width: 100%;
+    margin-bottom: 5px;
+  }
+  
+  #buttonLogIn {
+    margin-bottom : 30px;
+}
+
+  #buttonQuiz {
+    bottom : 20px;
+    right : 4%;
+  }
+
+
 }
 
 </style>

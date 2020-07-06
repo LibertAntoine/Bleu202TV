@@ -8,7 +8,7 @@
       <div id="menu" class="ui sidebar visible inverted right vertical menu">
        <a class="item" v-on:click="this.toggle">
           <i class="angle double right icon"></i>
-          <span v-if='$logStore.state.connected && $logStore.state.pseudo != ""'> Bonjour {{$logStore.state.pseudo}} </span>
+          <span v-if='$logStore.state.connected && $logStore.state.pseudo != ""'> Bonjour <span id="name">{{$logStore.state.pseudo}}</span> </span>
           <span v-else>Bleu202 TV</span>
         </a>
         <a class="item">
@@ -103,24 +103,24 @@ export default {
 
 #logoCompagnie {
     position: absolute;
-    bottom: 120px;
-    left: 25px;
-    height : 100px;
+    bottom: 98px;
+    left: 90px;
+    height : 60px;
 }
 
 #facebookIcon {
     color: white;
     position: absolute;
-    bottom: 140px;
-    right: 35px;
+    bottom: 100px;
+    right: 20px;
 }
 
 
 #logoAlencon {
     position: absolute;
     bottom: 20px;
-    left: 10px;
-    height : 75px;
+    left: 28px;
+    height : 65px;
 }
 
 #openMenu {
@@ -134,7 +134,7 @@ export default {
     font-size: 15px;
     font-weight : bold;
     cursor : pointer;
-    background: radial-gradient(at 80% 00%, rgba(black, 0.3) 10%, rgba(black, 0.0) 65%);
+    background: radial-gradient(at 80% 00%, rgba(black, 0.2) 10%, rgba(black, 0.0) 65%);
 }
 
 #menu {
@@ -142,9 +142,16 @@ export default {
   opacity : 0.96
 }
 
+#name {
+  font-weight: bold;
+}
+
+
 @media (max-height: 400px) {
   #logos {
       opacity:0%;
   }
 }
+
+
 </style>

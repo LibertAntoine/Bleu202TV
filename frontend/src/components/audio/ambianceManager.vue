@@ -12,7 +12,11 @@ export default {
     TotalMute : {type: Boolean, default : false}
   },
   watch: {
-    CurrentCanal : function() {this.toggleAmbiance()},
+    CurrentCanal : function() {
+        if(this.$parent.$parent.$parent.cartonOpen == false) {
+          this.toggleAmbiance()
+        }
+      },
     Mute : function() {this.toggleMute()},
     TotalMute : function() {this.toggleTotalMute()}
   },

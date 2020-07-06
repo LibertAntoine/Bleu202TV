@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 require('dotenv').config(); // Manage .env file
 
 const userRoutes = require('./routes/user');
+const romanRoutes = require('./routes/roman');
 
 // Database connexion
 mongoose.connect('mongodb+srv://AntoineLibert:'+ process.env.PASSWORD +'@bleu202tv-zwssb.mongodb.net/<dbname>?retryWrites=true&w=majority',
@@ -25,5 +26,6 @@ app.use((req, res, next) => {
 app.use(bodyParser.json()); // Parse the content of the request  
 
 app.use('/api/auth', userRoutes);
+app.use('/api/roman', romanRoutes);
 
 module.exports = app;

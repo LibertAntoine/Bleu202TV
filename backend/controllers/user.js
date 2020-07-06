@@ -44,3 +44,7 @@ exports.login = async (req, res, next) => {
   exports.auth = async (req, res, next) => {
     res.status(200).json({user: req.user});
   };
+
+  exports.edit = async (user) => {
+    await User.updateOne({ uniquename: user.uniqueName}, user);
+  };

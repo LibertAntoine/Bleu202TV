@@ -50,10 +50,12 @@ export default {
     goQuiz() {
       this.$logStore.state.opener = false;
       this.$refs.quizPage.toggle();
+      this.$parent.toogleOpenSong(this.$datas[5].openQ1)
     },
     gologPage() {
        this.$logStore.state.opener = false;
        this.$refs.logPage.toggle();
+       this.$parent.toogleOpenSong(this.$datas[5].login)
     }
   }
 }
@@ -80,6 +82,9 @@ export default {
     margin : 10px;
 }
 
+.ui.dimmer {
+  flex-direction: raw !important;
+}
 
 #acceuil-header {
     text-align: center;
@@ -87,7 +92,7 @@ export default {
     padding-left : 20px !important;
     background-color: #23a1d3;
     height : 65px;
-    color : black;
+    color : white;
     font-size: 36px;
     font-weight: normal;
 }

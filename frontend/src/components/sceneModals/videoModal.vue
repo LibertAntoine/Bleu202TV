@@ -1,21 +1,27 @@
 <template>
-<div id="videoModal">
+<div id="videoModal" ref="videoModal">
     <sui-modal v-model="open">
       <sui-modal-header id="headerVideo">{{ ModalTitle }}
         <i id="closeX" class="x icon" @click="toggle"></i>
       </sui-modal-header>
 
-      <sui-modal-content image id="videoContent">
+      <sui-modal-content  image id="videoContent">
+      <div id="modalContentVideo" ref="modalContentVideo">
       <iframe ref="iframe" :src="'https://player.vimeo.com/video/' + this.id + '?color=0f87f2&title=0&byline=0&portrait=0&fun=0&controls=1'"
-      width="100%" height="100%" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+      width="100%" height="100%" frameborder="0" allow="autoplay"></iframe>
+      <div ref="full" class="full">
+        <i v-show="!fullscreen" class="expand icon big" @click="toogleFullscrennVideo"></i>
+        <i v-show="fullscreen" class="compress icon big" @click="toogleFullscrennVideo"></i>
+      </div>
+      <div ref="collaspe" class="collaspe"></div>
+      </div>
       </sui-modal-content>
-    </sui-modal>
+     </sui-modal>
 </div>
 </template>
 
 <script>
 import player from '@vimeo/player'
-
 export default {
   name: 'modalVideo',
 props: {
@@ -27,7 +33,9 @@ props: {
       open: false,
       id : 304402648,
       ModalTitle : "",
-      videoPlayer: null
+      videoPlayer: null,
+      fullscreen: false,
+      remanance: 0,
     }
   },
   watch: {
@@ -37,19 +45,58 @@ props: {
     this.id = this.$datas[this.nbCanal].videoId;
     this.ModalTitle = this.$datas[this.nbCanal].name;
     this.InitVideo()
+
+    document.addEventListener("fullscreenchange", (e) => {
+      if(e.srcElement == this.$refs.modalContentVideo) {
+        this.fullscreen = !this.fullscreen
+      }
+    });
+    setInterval(() => {
+      if(this.remanance != 0) this.remanance--
+      else {
+        if(this.$refs.full) {
+          this.$refs.full.style.opacity = 0
+        }
+        this.$refs.collaspe.style.display = "block"
+      }
+    }, 1000);
+    this.$refs.modalContentVideo.addEventListener("mousemove", () => {
+      this.$refs.full.style.opacity = 1
+      this.remanance = 3
+      this.$refs.collaspe.style.display = "none"
+    });
   },
   methods: {
+    toogleFullscrennVideo() {
+        if(this.$fullscreen.getState() == true && this.fullscreen == false) {
+          this.$fullscreen.toggle(document.body, {wrap: false})
+          setTimeout(() => {
+              this.$fullscreen.toggle(this.$refs.modalContentVideo, {wrap: false})}, 100)
+        }
+        else if(this.$fullscreen.getState() == true && this.fullscreen == true) {
+            this.$fullscreen.toggle(this.$refs.modalContentVideo, {wrap: false})
+            setTimeout(() => {
+              this.$fullscreen.toggle(document.body, {wrap: false})}, 100)
+        } else {
+          this.$fullscreen.toggle(this.$refs.modalContentVideo, {wrap: false})
+        }
+    },
     toggle() {
       if(this.open) {
           this.videoPlayer.pause();
           this.$parent.mute = false;
       } else {
+        if(this.$fullscreen.getState() == false) this.$fullscreen.toggle(document.body, {wrap: false})
         this.videoPlayer.play();
+    
         this.videoPlayer.on('ended', () => {this.open = false})
         this.$parent.mute = true;
       }
       this.open = !this.open;
     },
+      fullscreenReturn () {
+        console.log('ok')
+      },
     InitVideo() {
         if(this.videoPlayer) delete(this.videoPlayer)
         this.videoPlayer = new player(this.$refs.iframe)
@@ -104,6 +151,32 @@ props: {
 #videoModal .ui.modal {
   width: 100% !important;
   height: 100% !important;
+}
+
+.full {
+  transition : opacity 1s;
+  position: relative;
+  top : -100%;
+  color : white;
+  margin : 10px;
+  padding : 4px;
+  width: 42px;
+  border-radius: 5px;
+  background-color: rgba($color: #000000, $alpha: 0.5);
+  z-index : 1001
+
+}
+
+#modalContentVideo {
+  height : 100%;
+  width : 100%;
+}
+
+.collaspe {
+  position: relative;
+  top: -105%;
+  height : 100%;
+  width : 100%;
 }
 
 </style>

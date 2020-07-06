@@ -51,9 +51,8 @@ export default new Vuex.Store ({
         },
         async signUp(state, reponses) {
             const data = await userApi.signup({
-                pseudo : reponses[5],
+                pseudo : reponses[4],
                 favoriteCharacter : reponses[3],
-                favoriteActor : reponses[4],
                 favoriteDrink : reponses[1],
                 favoriteCake : reponses[0],
                 astroSigne : reponses[2]
