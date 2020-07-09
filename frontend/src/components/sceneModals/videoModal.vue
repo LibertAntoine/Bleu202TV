@@ -88,7 +88,11 @@ props: {
       } else {
         if(this.$fullscreen.getState() == false) this.$fullscreen.toggle(document.body, {wrap: false})
         this.videoPlayer.play();
-    
+          if(!this.$parent.$parent.$parent.currentOpenSong.paused) {
+              this.$parent.$parent.$parent.currentOpenSong.pause()
+              this.$parent.$parent.$parent.currentOpenSong.currentTime = 0
+          }
+
         this.videoPlayer.on('ended', () => {this.open = false})
         this.$parent.mute = true;
       }
@@ -125,11 +129,18 @@ props: {
 
 #videoContent {
   padding: 0px;
-  padding-bottom: 45px !important;
   height : 100%;
   background-color: black// #2d2a2a;
-  
 }
+
+
+
+#videoModal .ui.dimmer {
+    padding : 0px;
+}
+
+
+
 
 #closeX {
   position: absolute;
@@ -149,8 +160,12 @@ props: {
 
 
 #videoModal .ui.modal {
+    position: fixed !important;
+  top: 0%;
   width: 100% !important;
-  height: 100% !important;
+  height: calc(100% - 45px) !important;
+  max-height: 100%;
+  margin: 0px !important;
 }
 
 .full {

@@ -12,7 +12,11 @@ export default new Vuex.Store ({
         opener : false,
         logPage : false,
         pseudo : null,
-        uniqueName : null
+        uniqueName : null,
+        favoriteCharacter: null,
+        favoriteDrink:null,
+        favoriteCake: null,
+        astroSigne: null
     },
     mutations: {
         logOut() {
@@ -31,6 +35,10 @@ export default new Vuex.Store ({
               cookie.setCookie("token", data.data.token, 15)
               this.state.pseudo = data.data.user.pseudo
               this.state.uniqueName = data.data.user.uniqueName
+              this.state.favoriteCharacter = data.data.user.favoriteCharacter
+              this.state.favoriteDrink = data.data.user.favoriteDrink
+              this.state.favoriteCake = data.data.user.favoriteCake
+              this.state.astroSigne = data.data.user.astroSigne
               this.state.connected = true      
             }
             return data
@@ -44,6 +52,10 @@ export default new Vuex.Store ({
               } else {
                 this.state.connected = true
                 this.state.pseudo = data.data.user.pseudo;
+                this.state.favoriteCharacter = data.data.user.favoriteCharacter
+                this.state.favoriteDrink = data.data.user.favoriteDrink
+                this.state.favoriteCake = data.data.user.favoriteCake
+                this.state.astroSigne = data.data.user.astroSigne
               }
             } else {
                 this.state.opener = true
@@ -57,10 +69,15 @@ export default new Vuex.Store ({
                 favoriteCake : reponses[0],
                 astroSigne : reponses[2]
               })
+
             if(data.status == 201) {
               cookie.setCookie("token", data.data.token, 15)
               this.state.pseudo = reponses[5]
               this.state.uniqueName = data.data.uniqueName
+              this.state.favoriteCharacter = reponses[3]
+              this.state.favoriteDrink = reponses[1]
+              this.state.favoriteCake = reponses[0]
+              this.state.astroSigne = reponses[2]
               this.state.connected = true
             }
          }

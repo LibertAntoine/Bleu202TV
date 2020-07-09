@@ -71,7 +71,9 @@ export default {
     toogleOpenSong(newSong) {
       if(this.currentOpenSong.paused) {
         this.currentOpenSong = newSong
-        this.currentOpenSong.play()
+        if(!this.totalMute) {
+          this.currentOpenSong.play()
+        }
       }
     },
     toogleFullscrenn() {

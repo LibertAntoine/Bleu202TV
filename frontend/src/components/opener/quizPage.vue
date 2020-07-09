@@ -158,13 +158,13 @@
                 <sui-card class="radioCardfix " @click="answer('1')">
                   <sui-image :src="perso1" class="persoQuiz"/>
                   <sui-card-content class="quizContentHeader">
-                    <sui-card-header class="quizHeader">Nymphadora</sui-card-header>
+                    <sui-card-header class="quizHeader">Isadora</sui-card-header>
                   </sui-card-content>
                 </sui-card>
                 <sui-card class="radioCardfix persoQuiz" @click="answer('2')"> 
                   <sui-image :src="perso2" class="persoQuiz"/>
                   <sui-card-content class="quizContentHeader">
-                    <sui-card-header class="quizHeader">Le gueux</sui-card-header>
+                    <sui-card-header class="quizHeader">Mon Bon Gaultier</sui-card-header>
                   </sui-card-content>
                 </sui-card>
                 </sui-card-group>
