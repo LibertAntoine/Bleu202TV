@@ -17,7 +17,7 @@
         <div v-show="currentChannel == 3" id="screen" :style="{'background-image':  'url(' + $datas[3].gif  + ')'}"></div>
         <div v-show="currentChannel == 4" id="screen" :style="{'background-image':  'url(' + $datas[4].gif  + ')'}"></div>
         <div id="playBloc" @click="toggle">
-           <img v-show="$logStore.state.connected && currentChannel >= 0 && currentChannel < 4" id="playButton" alt="Button Lancer le contenu" src="@/assets/PlayButton.png">
+           <img v-show="$logStore.state.connected && currentChannel >= 0 && currentChannel < 4" id="playButton" alt="Button Lancer le contenu" src="@/assets/TV/Ecran/PlayButton.png">
         </div>
         
 
@@ -117,13 +117,13 @@ export default {
       }
     },
     onResize() {
-      this.windowHeight = window.visualViewport.height;
-      this.mobile = (window.visualViewport.width < 556) ? true : false;
-      if(this.windowHeight > window.visualViewport.width - 145 && this.TV.hasClass("TVRight")) {
+      this.windowHeight = window.innerHeight;
+      this.mobile = (window.innerWidth < 556 || window.innerHeight < 556) ? true : false;
+      if(this.windowHeight > window.innerWidth - 145 && this.TV.hasClass("TVRight")) {
         this.TV.removeClass("TVRight")
         this.TV.addClass( "TVCenter" );
       }
-      if(this.windowHeight < window.visualViewport.width- 145 && this.TV.hasClass("TVCenter")) {
+      if(this.windowHeight < window.innerWidth - 145 && this.TV.hasClass("TVCenter")) {
         this.TV.removeClass("TVCenter")
         this.TV.addClass("TVRight");
       }
@@ -260,7 +260,7 @@ export default {
   position: relative;
   top : -225.5%;
   left : 3%;
-  background-image : url("../../assets/gif_zap_channel.gif");
+  background-image : url("../../assets/TV/Ecran/gif_zap_channel.gif");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -394,6 +394,47 @@ export default {
 }
 
 
+@media (max-height: 556px) {
+  #TV-group {
+    padding : 10px;
+    bottom: 34px;
+    width : 320px !important;
+    height : 320px !important;
+  }
 
+  #screen {
+    left : 12%;
+  }
+
+  #snowScreen {
+  top : -202.5%;
+    left : 12%;
+  }
+
+  #playBloc {
+    left : 12%;
+  }
+
+
+  #telecommande {
+    display: none;
+  }
+
+    #boutonRond {
+    display : none;
+  }
+
+
+  #antenneDroite {
+    left: 68%;
+}
+
+  #antenneGauche {
+    left: 50%;
+}
+
+
+
+}
 
 </style>

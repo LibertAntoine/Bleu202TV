@@ -49,23 +49,23 @@ export default {
 }
 
 #background1 {
-  background-image: url("../../assets/Defilee3.jpg");
+  background-image: url("../../assets/Decor/Defile.jpg");
 }
 
 #background2 {
-  background-image: url("../../assets/PlateauTV.jpg");
+  background-image: url("../../assets/Decor/PlateauTV.jpg");
 }
 
 #background3 {
-  background-image: url("../../assets/Roman2.jpg");
+  background-image: url("../../assets/Decor/RomanPhoto.jpg");
 }
 
 #background4 {
-  background-image: url("../../assets/Zapping.jpg");
+  background-image: url("../../assets/Decor/Zapping.jpg");
 }
 
 #background5 {
-  background-image: url("../../assets/loge4.jpg");
+  background-image: url("../../assets/Decor/Loge.jpg");
 }
 
 

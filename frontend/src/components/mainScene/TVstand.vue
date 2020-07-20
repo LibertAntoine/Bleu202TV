@@ -1,6 +1,6 @@
 <template>
       <div id="meuble">
-        <img id="meubleTV" src="@/assets/meuble2.png" alt="meuble de télévision">
+        <img id="meubleTV" src="@/assets/TV/meuble.png" alt="meuble de télévision">
       </div>
 </template>
 
@@ -18,6 +18,7 @@ export default {
   bottom: -858px;
   left: 20%;
   margin-left : -500px;
+  z-index: -1;
 }
 
 #meubleTV {

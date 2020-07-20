@@ -1,7 +1,7 @@
 <template>
   <div id="channelController" >
     <div id="channelTest" v-bind:class="{ Mobile: Mobile, Desktop: !Mobile }" @click="zapping()">
-        <img ref="Bouton" v-if="!Mobile" :class="{hidden:!CanalFocus || !$logStore.state.connected, BoutonChannel:true}" alt="Button Channel" src="@/assets/Bouton_Appuye.png">
+        <img ref="Bouton" v-if="!Mobile" :class="{hidden:!CanalFocus || !$logStore.state.connected, BoutonChannel:true}" alt="Button Channel" src="@/assets/TV/Animations/Bouton_Appuye.png">
 
         <img v-show="CanalFocus && CanalState && $logStore.state.connected" class="TitleChannel" alt="Title of the Channel" :src="this.GreenImage">
         <img v-show="!CanalFocus && CanalState && $logStore.state.connected" class="TitleChannel" alt="Title of the Channel" :src="this.BlueImage">
@@ -35,9 +35,9 @@ export default {
     }
   },
   mounted: function() {
-      this.GreenImage = require("@/assets/Canal_Title/Title_Canal" + this.CanalNb + "Green.png")
-      this.BlueImage = require("@/assets/Canal_Title/Title_Canal" + this.CanalNb + "Blue.png")
-      this.GreyImage = require("@/assets/Canal_Title/Title_Canal" + this.CanalNb + "Grey.png")
+      this.GreenImage = require("@/assets/TV/Canal_Title/Title_Canal" + this.CanalNb + "Green.png")
+      this.BlueImage = require("@/assets/TV/Canal_Title/Title_Canal" + this.CanalNb + "Blue.png")
+      this.GreyImage = require("@/assets/TV/Canal_Title/Title_Canal" + this.CanalNb + "Grey.png")
       this.checkBouton();
   },
   computed: {
@@ -91,6 +91,7 @@ export default {
 
 .Mobile {
   padding: 0px;
+     
 }
 .Mobile .TitleChannel {
     padding: 0px;

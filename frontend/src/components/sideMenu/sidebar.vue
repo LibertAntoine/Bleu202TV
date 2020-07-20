@@ -33,13 +33,13 @@
         </a>
         <div id="logos">    
             <a href="http://www.bleu202.com/" onclick="window.open(this.href); return false;">
-                <img id="logoCompagnie" alt="Logo de la compagnie bleu 202" src="@/assets/CompagnieBleu202.png">
+                <img id="logoCompagnie" alt="Logo de la compagnie bleu 202" src="@/assets/Logos/CompagnieBleu202.png">
             </a>
             <a href="https://www.facebook.com/CompagnieBleu202/" onclick="window.open(this.href); return false;">
                 <i id="facebookIcon" class="facebook icon huge"></i>
             </a>
             <a href="http://www.alencon.fr/" onclick="window.open(this.href); return false;">
-                <img id="logoAlencon" alt="Logo de la ville d'Alençon" src="@/assets/Logo_ville.png">
+                <img id="logoAlencon" alt="Logo de la ville d'Alençon" src="@/assets/Logos/Logo_ville.png">
             </a>
         </div>
       </div>
@@ -96,6 +96,10 @@ export default {
 
 <style lang="scss">
 
+#menu {
+  font-size : 15px;
+}
+
 #sideMenu {
   position: fixed;
   z-index: 1001;
@@ -149,7 +153,7 @@ export default {
 
 @media (max-height: 400px) {
   #logos {
-      opacity:0%;
+      display : none;
   }
 }
 

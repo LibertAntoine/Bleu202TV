@@ -12,14 +12,15 @@
       </div>
       <div v-if="cartonOpen" id="cartonOpener">
         <div id="centerOpenBloc">
-          <p class="openText">Bienvenue sur Bleu202TV !!!</p>
-          <p class="openText">Cette année vous ne lecherez plus les vitrines</p>
-          <sui-button color="black" size="huge" id="button_right"  @click.native="begin" basic>
-                Commencer !
-                <i class="angle double right icon"></i>
+          <h1 id="openH1">Bienvenue dans Lèche Vitrines !</h1>
+          <h2 id="openH2">BLEU202 TV vous invite en famille ou entre ami.e.s à partager une aventure virtuellement poilante.</h2>
+           <sui-button size="huge" id="button_begin"  @click.native="begin" inverted>
+                Je découvre 
+                <!-- <i class="angle double right icon"></i> -->
           </sui-button>
+          <h3 id="openH3">Entre le 27 et le 31 juillet, decouvrez de nouveaux contenus chaque jour qui viendront s'ajouter à ceux des jours précédents. Puis revenez les explorer jusqu'à la fin de l'été.</h3>
         </div>
-        <img id="logoCompagnieOpen" alt="Logo de la compagnie bleu 202" src="@/assets/CompagnieBleu202.png">
+        <img id="logoCompagnieOpen" alt="Logo de la compagnie bleu 202" src="@/assets/Logos/CompagnieBleu202.png">
       </div>
   </div>
 </template>
@@ -71,7 +72,7 @@ export default {
     toogleOpenSong(newSong) {
       if(this.currentOpenSong.paused) {
         this.currentOpenSong = newSong
-        if(!this.totalMute) {
+        if(!this.totalMute && this.currentOpenSong) {
           this.currentOpenSong.play()
         }
       }
@@ -89,7 +90,38 @@ export default {
 }
 </script>
 
-<style lang="scss" >
+<style lang="scss">
+
+#openH3 {
+    font-family: Lato, sans-serif !important;
+  font-weight: normal;
+  font-style: italic;
+  font-size: 18px;
+  color : white;
+}
+
+#openH1 {
+  font-family: Bodoni MT, serif !important;
+  font-size: 60px;
+  color : white;
+}
+
+#openH2 {
+  font-family: Lato, sans-serif !important;
+  font-weight: normal;
+  font-style: italic;
+  font-size: 25px;
+  color : white;
+}
+
+#button_begin {
+  margin-top : 25px;
+  margin-bottom : 20px;
+}
+
+#button_begin:hover {
+  color : #2185d0;
+}
 
 body {
   line-height: 0px !important;
@@ -125,7 +157,7 @@ body {
 }
 
 #logoCompagnieOpen {
-  width : 150px;
+  width : 130px;
   position : absolute;
   right : 2%;
   top : 2%;
@@ -143,6 +175,67 @@ body {
   left: 50%;
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
+}
+
+@media (max-width: 556px) {
+  #centerOpenBloc {
+  position: relative;
+  padding: 10px;
+  }
+
+  #openH3 {
+    font-size: 16px;
+
+  }
+
+  #openH1 {
+    font-size: 40px;
+
+  }
+
+  #openH2 {
+
+    font-size: 25px;
+
+  }
+
+  #logoCompagnieOpen {
+  width : 50px;
+}
+
+}
+
+@media (max-height: 556px) {
+  #centerOpenBloc {
+  position: relative;
+  padding: 10px;
+  }
+
+  #openH3 {
+    font-size: 16px;
+
+  }
+
+  #openH1 {
+    font-size: 40px;
+
+  }
+
+  #openH2 {
+
+    font-size: 25px;
+
+  }
+
+  #logoCompagnieOpen {
+  width : 30px;
+}
+
+#button_begin {
+  margin-top : 5px;
+  margin-bottom : 3px;
+}
+
 }
 
 

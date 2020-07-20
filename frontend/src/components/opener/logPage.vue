@@ -1,7 +1,7 @@
 <template>
 <div id="acceuilModal">
     <sui-modal ref="modal" v-model="open" :closable=false>
-      <sui-modal-header id="acceuil-header">
+      <sui-modal-header id="acceuil-header" class="bodoni-Font">
         <i id="returnIcon" class="angle double left small icon" @click="retour"></i> 
           Content de te revoir !
       </sui-modal-header>
@@ -9,12 +9,14 @@
       <sui-modal-content image id="acceuil-content">
           <sui-modal-description id="acceuil-text">
             
-            <p>Ahh !!! Tu as mis du temps à revenir. Mais... Rapelle-moi, c'est quoi ton petit nom déjà ?<p>
+            <p class="center lato-Font">Salut ! Te voilà à nouveau ! <br/>
+            Inscris ton nom de virus pour continuer l’aventure. 
+            <p>
             <div id="acceuil-button">
                 <sui-label basic ref="warning" color="red" pointing id="warning">Désolé, je ne reconnais pas ce nom</sui-label>
                 <a ref="buttonQuiz" id="buttonQuiz" @click="goQuiz">J'ai oublié mon nom de virus</a>
                 <sui-input id="logInInput" placeholder="Ecris ton nom..." focus maxlength="40" @input="checkChange"/>
-                <sui-button ref="logButton" color="teal" size="huge" id="buttonLogIn" @click.native="logIn()" disabled>
+                <sui-button ref="logButton" primary size="huge" id="buttonLogIn" @click.native="logIn()" disabled class="cambria-Font">
                 Valider
                 </sui-button>
             </div>
@@ -75,6 +77,7 @@ export default {
 
 <style lang="scss">
 
+
 #returnIcon {
   padding-top: 11px;
   float: left;
@@ -93,7 +96,7 @@ export default {
 
 #buttonQuiz {
   position: absolute;
-  color : green;
+  color : #2185d0;
   bottom : 20px;
   right : 22%;
   font-size : 16px;

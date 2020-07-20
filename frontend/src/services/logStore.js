@@ -63,21 +63,21 @@ export default new Vuex.Store ({
         },
         async signUp(state, reponses) {
             const data = await userApi.signup({
-                pseudo : reponses[4],
-                favoriteCharacter : reponses[3],
+                pseudo : reponses[2],
+                favoriteCharacter : reponses[4],
                 favoriteDrink : reponses[1],
                 favoriteCake : reponses[0],
-                astroSigne : reponses[2]
+                astroSigne : reponses[3]
               })
 
             if(data.status == 201) {
               cookie.setCookie("token", data.data.token, 15)
-              this.state.pseudo = reponses[5]
+              this.state.pseudo = reponses[2]
               this.state.uniqueName = data.data.uniqueName
-              this.state.favoriteCharacter = reponses[3]
+              this.state.favoriteCharacter = reponses[4]
               this.state.favoriteDrink = reponses[1]
               this.state.favoriteCake = reponses[0]
-              this.state.astroSigne = reponses[2]
+              this.state.astroSigne = reponses[3]
               this.state.connected = true
             }
          }

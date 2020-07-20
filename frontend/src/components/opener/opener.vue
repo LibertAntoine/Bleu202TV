@@ -1,20 +1,20 @@
 <template>
 <div id="acceuilModal">
     <sui-modal ref="modal" v-model="$logStore.state.opener" :closable=false>
-      <sui-modal-header id="acceuil-header">
+      <sui-modal-header id="acceuil-header" class="bodoni-Font">
           Bienvenue sur Bleu 202 TV !
       </sui-modal-header>
 
       <sui-modal-content image id="acceuil-content">
           <sui-modal-description id="acceuil-text">
             
-            <p>Bienvenue à toi étranger, pour une nouvelle aventure Lèche-Vitrine un peu spécial cette année. La ville d'Alençon à vecut le confinement, et cela a chanboulé beaucoup de chose, c'est le cas de la dire.<p>
+            <p class="center lato-Font">Bienvenue à toi, curieuse ou curieux. Cette année a été très spéciale pour tout le monde, y compris pour le Lèche-Vitrines, qui s’est réinventé en une aventure évolutive que tu t’apprêtes à vivre. Le confinement et le déconfinement ont été très inspirants. Alors, tu es prêt.e ?<p>
             <div id="acceuil-button">
-                <sui-button color="teal" size="huge" id="button_left"  @click.native="goQuiz">
-                Je suis un petit nouveau
+                <sui-button primary class="backBleuColor cambria-Font" size="huge" id="button_left"  @click.native="goQuiz">
+                C’est ma première fois 
                 </sui-button>
-                <sui-button color="teal" size="huge" id="button_right"  @click.native="gologPage">
-                Je suis déjà venu
+                <sui-button primary class="backBleuColor cambria-Font" size="huge" id="button_right"  @click.native="gologPage">
+                Je connais la maison
                 </sui-button>
 
             </div>
@@ -64,6 +64,26 @@ export default {
 <style lang="scss">
 
 
+.bodoni-Font {
+  font-family: Bodoni MT, serif !important;
+}
+
+.lato-Font {
+  font-family: Lato, sans-serif !important;
+  color: #1D252E!important;
+}
+
+.cambria-Font {
+  font-family: Cambria, sans-serif !important;
+  font-weight: normal !important;
+}
+
+
+.center {
+  text-align: center;
+}
+
+
 #acceuil-text {
     font-size: 20px;
     width : 100%;
@@ -93,7 +113,7 @@ export default {
     background-color: #23a1d3;
     height : 65px;
     color : white;
-    font-size: 36px;
+    font-size: 39px;
     font-weight: normal;
 }
 

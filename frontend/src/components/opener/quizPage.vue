@@ -1,17 +1,18 @@
 <template>
 <div id="acceuilModal">
     <sui-modal ref="modal" id="quizModal" v-model="open" :closable=false>
-      <sui-modal-header id="acceuil-header">
+      <sui-modal-header id="acceuil-header" class="bodoni-Font">
           <i ref='returnIcon' id="returnIcon" class="angle double left small icon" @click="retour"></i> 
-          Quel déconfiné es-tu ? 
+          Quel.le déconfiné.e es-tu ? 
+          <span v-if="currentQuestionTag" class="currentQuestion">{{question}}/5</span>
       </sui-modal-header>
 
       <sui-modal-content image id="quiz-content">
         <div id="blockQuestion">
           <div ref="question1" id="question1" class="question">
           <sui-modal-description>
-            <p>Hop Hop Hop !! Avant de commencer j'aimerai bien en savoir un peu plus sur toi le petit nouveau.<p>
-            <p>Dis moi un peu, si tu étais un gâteau, lequel serais-tu ?<p>
+            <p class="center lato-Font">Avant de commencer, j’aimerais bien en savoir un peu plus… Promis, tu comprendras après ! <p>
+            <p class="center lato-Font">Si tu étais un gâteau, tu serais…<p>
             <div id="acceuil-button">
               <sui-card-group :items-per-row="3">
                 <sui-card class="radioCardfix" @click="answer('1')">
@@ -39,7 +40,7 @@
 
           <div ref="question2" class="question">
           <sui-modal-description id="question2">
-            <p>Dis moi un peu, si tu étais une boisson, laquelle serais-tu ?<p>
+            <p class="center lato-Font">Si tu étais une boisson, laquelle serais-tu ?<p>
             <div id="acceuil-button">
               <sui-card-group :items-per-row="3">
                 <sui-card class="radioCardfix" @click="answer('1')">
@@ -65,11 +66,23 @@
           </sui-modal-description>
           </div>
 
+          <div ref="question3" class="question">
+          <sui-modal-description id="question3" >
+            <p class="center lato-Font">Dans le monde d’après, comment aimerais-tu qu’on t’appelle ? <p>
+            <div id="acceuil-button" class="center-button">
+              <sui-input  class="lato-Font" @input="checkChange"  placeholder="Coro-Survivor..." focus maxlength="20" />
+              <sui-button class="cambria-Font" @click="answer(textInput)" primary ref="validator3" size="huge" id="button_right" :disabled="textDisabled">
+                Valider
+                </sui-button>
+            </div>
+          </sui-modal-description>
+          </div>
 
-          <div ref="question3" id="question3" class="question">
-          <sui-modal-description id="question3" class="questionContent">
-            <p>Dis moi un peu, dans le monde d'avant, ton signe astrologique, c'était quoi ?<p>
-            <div id="acceuil-button">
+
+          <div ref="question4" id="question4" class="question">
+          <sui-modal-description id="question4" class="questionContent">
+            <p class="center lato-Font">Dans le monde d'avant, c’était quoi ton signe astrologique ?<p>
+            <div id="acceuil-button" class="astro-button">
               <sui-card-group :items-per-row="4">
                 <sui-card class="radioCard" @click="answer('1')">
                   <sui-image :src="signe1" />
@@ -150,18 +163,19 @@
           </sui-modal-description>
           </div>
 
-          <div ref="question4" class="question" >
-          <sui-modal-description id="question4">
-            <p>Dis moi un peu, si tu étais une boisson, laquelle serais-tu ?<p>
+          <div ref="question5" class="question" >
+          <sui-modal-description id="question5">
+            <p class="center lato-Font">Allez, plus qu’une question ! <br/>
+              Quel est ton personnage de Lèche-Vitrines préféré ?<p>
             <div id="acceuil-button">
               <sui-card-group :items-per-row="2">
-                <sui-card class="radioCardfix " @click="answer('1')">
+                <sui-card class="radioCardfix " @click="valid('1')">
                   <sui-image :src="perso1" class="persoQuiz"/>
                   <sui-card-content class="quizContentHeader">
                     <sui-card-header class="quizHeader">Isadora</sui-card-header>
                   </sui-card-content>
                 </sui-card>
-                <sui-card class="radioCardfix persoQuiz" @click="answer('2')"> 
+                <sui-card class="radioCardfix persoQuiz" @click="valid('2')"> 
                   <sui-image :src="perso2" class="persoQuiz"/>
                   <sui-card-content class="quizContentHeader">
                     <sui-card-header class="quizHeader">Mon Bon Gaultier</sui-card-header>
@@ -172,25 +186,15 @@
           </sui-modal-description>
           </div>
 
-          <div ref="question5" class="question">
-          <sui-modal-description id="question6" >
-            <p>Dis moi un peu, dans le monde d'après, comment tu aimerais qu'on t'apelle ?<p>
-            <div id="acceuil-button">
-              <sui-input  @input="checkChange"  placeholder="Coro-Survivor..." focus maxlength="20" />
-              <sui-button  @click="valid(textInput)" color="teal" ref="validator5" size="huge" id="button_right" disabled>
-                Valider
-                </sui-button>
-            </div>
-          </sui-modal-description>
-          </div>
+          
 
           <div ref="bilan" class="question">
           <sui-modal-description id="bilan" >
-            <p>Bienvenue à toi {{reponses[5]}}, tu es maintenant prêt pour le monde d'après. Nous sommes heureux de te dicerner ton nom de virus, rien qu'à toi :<p>
+            <p class="center lato-Font">Merci <span class="bold">{{reponses[2]}}</span> ! <br /> Après avoir consulté tes réponses à nos questions, il semblerait que ton nom de virus soit :<p>
             <p id="uniqueName">{{$logStore.state.uniqueName}}<p>
-            <p>Garde-le bien en tête, car il te seras demandez si tu reviens nous voir.<p>
+            <p class="center lato-Font">Garde le bien en tête, ce sera ton mot de passe pour les prochains jours, si tu veux revenir.<p>
             <div id="acceuil-button">
-              <sui-button color="teal" @click='finishClose' size="huge" id="button_right">
+              <sui-button primary class="cambria-Font" @click='finishClose' size="large" id="button_end">
                 Fermer
               </sui-button>
             </div>
@@ -220,11 +224,13 @@ export default {
         reponses : [],
         textInput : "",
         onChange: false,
+        textDisabled: true,
+        currentQuestionTag : true,
         gateau1 : require('@/assets/quiz/Gateau/Gateau1.jpg'),
         gateau2 : require('@/assets/quiz/Gateau/Gateau2.jpg'),
         gateau3 : require('@/assets/quiz/Gateau/Gateau3.jpg'),
-        boisson1 : require('@/assets/quiz/Boisson/Boisson1.jpg'),
-        boisson2 : require('@/assets/quiz/Boisson/Boisson2.jpg'),
+        boisson1 : require('@/assets/quiz/Boisson/Boisson1.png'),
+        boisson2 : require('@/assets/quiz/Boisson/Boisson2.png'),
         boisson3 : require('@/assets/quiz/Boisson/Boisson3.jpg'),
         signe1 : require('@/assets/quiz/Astro/Signe1.jpg'),
         signe2 : require('@/assets/quiz/Astro/Signe2.jpg'),
@@ -247,6 +253,7 @@ export default {
       this.open = !this.open;
     },
     finishClose() {
+      this.currentQuestionTag = true;
       this.reponses = []
       this.question = 1 
       this.persoName = ""
@@ -284,7 +291,9 @@ export default {
 
     },
     answer(response) {
+
       if(!this.onChange) {
+      this.textDisabled = true;
       this.textInput = "";
       this.onChange = true;
       this.$refs['question' + this.question].style.opacity = 0;
@@ -306,9 +315,9 @@ export default {
     checkChange(e) {
       this.textInput = e
       if(e != "" && e.length <= 20) {
-        this.$refs['validator' + this.question].disabled = false;
+        this.textDisabled = false;
       } else {
-        this.$refs['validator' + this.question].disabled = true;
+        this.textDisabled = true;
       }
     },
     async valid(response) {
@@ -322,6 +331,7 @@ export default {
       }, 500);
       await this.$logStore.dispatch('signUp', this.reponses)
       if(this.$logStore.state.connected) {
+        this.currentQuestionTag = false;
         this.$parent.$parent.$refs.scene.$refs.television.zap('0')
         this.$refs.bilan.style.display = "block"
         setTimeout(() => {
@@ -337,18 +347,34 @@ export default {
 
 <style lang="scss">
 
-//<div id="gateau1" class="gateau"></div>
+@font-face {
+  font-family: 'coffee+teademo-Regular';
+  src: url("../../font/coffee+teademo-Regular.ttf") format('ttf');
+}
+
+
+.currentQuestion {
+  float: right;
+  font-size : 22px;
+  padding-right : 8px;
+}
 
 .astroTitle {
   padding : 6px !important;
   height: 40px;
 }
 
+#button_end {
+  float : right;
+  padding : 11px 20px 11px 20px; 
+  font-size : 19px;
+}
 
 .radioCard {
   opacity : 0.7 ;
   transition: opacity 0.5s !important;
   height: 100% !important;
+  margin-bottom : 0px !important;
 }
 
 .ImageChoice {
@@ -407,6 +433,10 @@ export default {
   transition : height 1s
 }
 
+.center-button {
+  margin : 0 auto;
+}
+
 
 #acceuil-header {
     text-align: center;
@@ -437,6 +467,22 @@ export default {
   
 }
 
+
+.quizHeader {
+    padding-top : 2px;
+    font-size : 21px !important;
+}
+
+.quizContentHeader {
+
+  min-height: 0px !important;
+  height: 100%;
+}
+
+.ui.four.cards {
+  padding-bottom : 8px !important;
+}
+
 .radioCard:hover {
   opacity : 1;
 }
@@ -453,7 +499,7 @@ export default {
 
 #quiz-content {
   overflow : auto;
-  height : 90%;
+  //height : 95%;
 }
 
 .ui.modal {
@@ -466,6 +512,9 @@ export default {
     margin : 0 auto !important;
   }
 
+#blockQuestion {
+  width: 100%;
+}
 
 @media (max-width: 570px) {
 
@@ -480,7 +529,68 @@ export default {
   }
 
   .quizHeader {
-    font-size : 12px !important;
+    font-size : 10px !important;
+    padding : 3px;
+  }
+
+  .quizContentHeader {
+    padding : 2px !important;
+  }
+
+  .radioCardfix {
+    margin : 0 auto !important;
+    width: calc(33.33333333% - 5px) !important;
+  }
+
+  .radioCard {
+    margin : 0 auto !important;
+    width: calc(33.33333333% - 5px) !important;
+  }
+
+  .ui.four.cards {
+    width : 100% !important;
+    margin : 0 auto !important;
+  }
+
+
+  .ui.three.cards {
+    width : 100% !important;
+    margin : 0 auto !important;
+  }
+
+  #quiz-content {
+    max-height: 500px !important;
+
+  }
+  
+  .ui.standard.modal {
+    margin : 5px;
+    width : 90%;
+    max-height: 500px !important;
+  }
+
+  #quizModal {
+    padding: 0px;
+    width : 100%;
+    min-width: 0px;
+
+  }
+}
+
+@media (max-height: 570px) {
+
+  .astroTitle {
+    height: 25px !important;
+  }
+
+  #acceuil-header {
+    font-size : 20px !important;
+    line-height: 32px;
+    height : 50px !important;
+  }
+
+  .quizHeader {
+    font-size : 10px !important;
     padding : 3px;
   }
 
@@ -513,6 +623,16 @@ export default {
   .ui.standard.modal {
     margin : 5px;
     width : 90%;
+    max-height: 250px !important;
+  }
+
+  #quiz-content {
+    max-height: 250px !important;
+
+  }
+
+  #acceuil-text {
+        font-size : 15px !important;
   }
 
   #quizModal {
@@ -522,11 +642,14 @@ export default {
   }
 }
 
+
+
+
 #uniqueName {
+  font-family: coffee+teademo-Regular !important;
+  font-size : 26px !important;
   text-align: center;
   color : red;
   font-weight: bold;
 }
-
-
 </style>
