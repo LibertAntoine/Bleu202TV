@@ -26,7 +26,7 @@ export default
         profil: 1,
         photos: [require("@/assets/roman/photo/4.jpg")],
         audio: new Audio(require('@/assets/roman/audio/4.mp3')),
-        time: 15000,
+        time: 14000,
         next: [5]
        },
        { // 5
@@ -40,7 +40,7 @@ export default
         profil: 1,
         photos: [require("@/assets/roman/photo/6.jpg")],
         audio: new Audio(require('@/assets/roman/audio/6.mp3')),
-        time: 7000,
+        time: 6500,
         next: [7]
        } 
        ,
@@ -77,14 +77,14 @@ export default
         profil: 1,
         photos: [require("@/assets/roman/photo/12.jpg")],
         audio: new Audio(require('@/assets/roman/audio/12.mp3')),
-        time: 15000,
+        time: 14000,
         next: [15]
        },
        { // 13
         profil: 1,
         photos: [require("@/assets/roman/photo/13.jpg")],
         audio: new Audio(require('@/assets/roman/audio/12.mp3')),
-        time: 15000,
+        time: 14000,
         next: [15]
        },
        { // 14
@@ -931,9 +931,9 @@ export default
         next: [149]
        },
        { // 149
-        profil: 9,
-        photos: [require("@/assets/roman/photo/148.jpg")], // end
-        audio: new Audio(require('@/assets/roman/audio/146.mp3')), //end
+        profil: 1,
+        photos: [require("@/assets/roman/photo/149.jpg")], // end
+        audio: new Audio(require('@/assets/roman/ambiance/findSound.mp3')), //end
         time: null,
         next: null
        },
@@ -1020,7 +1020,14 @@ export default
         audio: new Audio(require('@/assets/roman/audio/137.mp3')),
         time: 10000,
         next: [140]
-       }
+       },
+       { // 162
+        profil: 1,
+        photos: [require("@/assets/roman/photo/162.jpg")], // end
+        audio: new Audio(require('@/assets/roman/ambiance/findSound.mp3')), //end
+        time: null,
+        next: null
+       },
     ]
 /* 
 choix = {

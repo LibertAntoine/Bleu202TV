@@ -71,10 +71,12 @@ export default {
         this.currentOpenSong.play();
     },
     toogleOpenSong(newSong) {
-      if(this.currentOpenSong.paused) {
-        this.currentOpenSong = newSong
-        if(!this.totalMute && this.currentOpenSong) {
-          this.currentOpenSong.play()
+      if(this.currentOpenSong) {
+        if(this.currentOpenSong.paused) {
+          this.currentOpenSong = newSong
+          if(!this.totalMute && this.currentOpenSong) {
+            this.currentOpenSong.play()
+          }
         }
       }
     },
