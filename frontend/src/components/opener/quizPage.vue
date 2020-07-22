@@ -562,12 +562,12 @@ export default {
     max-height: 500px !important;
 
   }
-  
+  /*
   .ui.standard.modal {
     margin : 5px;
     width : 90%;
     max-height: 500px !important;
-  }
+  }*/
 
   #quizModal {
     padding: 0px;
@@ -619,12 +619,12 @@ export default {
     margin : 0 auto !important;
   }
 
-  
+  /*
   .ui.standard.modal {
     margin : 5px;
     width : 90%;
     max-height: 250px !important;
-  }
+  }*/
 
   #quiz-content {
     max-height: 250px !important;
@@ -652,4 +652,5 @@ export default {
   color : red;
   font-weight: bold;
 }
+
 </style>

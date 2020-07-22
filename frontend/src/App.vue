@@ -65,6 +65,7 @@ export default {
     begin() {
         if(this.$logStore.state.connected) this.currentOpenSong = this.$datas[5].openConnect
         else this.currentOpenSong = this.$datas[5].openNoConnect
+        this.toogleFullscrenn();
         this.cartonOpen = false;
         this.$refs.scene.$refs.television.$refs.ambianceManager.toggleAmbiance()
         this.currentOpenSong.play();

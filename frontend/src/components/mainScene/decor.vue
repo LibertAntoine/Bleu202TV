@@ -50,6 +50,7 @@ export default {
 
 #background1 {
   background-image: url("../../assets/Decor/Defile.jpg");
+  background-position: 50% 58%;
 }
 
 #background2 {
@@ -78,5 +79,33 @@ export default {
   width: 100%;
   z-index: -2;
 }
+
+@media (max-width: 556px) {
+  #background1 {
+    background-image: url("../../assets/Decor/Defile_mob.jpg");
+    background-position: 50% 65%;
+  }
+
+  #background2 {
+    background-image: url("../../assets/Decor/PlateauTV_mob.jpg");
+    background-position: 50% 64%;
+  }
+
+  #background3 {
+    background-image: url("../../assets/Decor/RomanPhoto_mob.jpg");
+    background-position: 50% 72%;
+  }
+
+  #background4 {
+    background-image: url("../../assets/Decor/Zapping_mob.jpg");
+    background-position: 50% 74%;
+  }
+
+  #background5 {
+    background-image: url("../../assets/Decor/Loge_mob.jpg");
+    background-position: 50% 64%;
+  }
+}
+
 
 </style>

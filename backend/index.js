@@ -1,5 +1,22 @@
+var fs = require('fs');
 const http = require('http');
+/*
+const https = require('https');
+*/
 const app = require('./app');
+
+/*
+// Certificate
+const privateKey = fs.readFileSync('/etc/letsencrypt/live/leche-vitrines.tv/privkey.pem', 'utf8');
+const certificate = fs.readFileSync('/etc/letsencrypt/live/leche-vitrines.tv/cert.pem', 'utf8');
+const ca = fs.readFileSync('/etc/letsencrypt/live/leche-vitrines.tv/chain.pem', 'utf8');
+
+const credentials = {
+	key: privateKey,
+	cert: certificate,
+	ca: ca
+};
+*/
 
 // normelize the port used. 
 const normalizePort = val => {
@@ -37,14 +54,26 @@ const normalizePort = val => {
     }
   };
 
-  const server = http.createServer(app);
+  const httpServer = http.createServer(app);
+  //const httpsServer = https.createServer(credentials, app);
 
 // TODO : Partie à revoir https://openclassrooms.com/fr/courses/6390246-passez-au-full-stack-avec-node-js-express-et-mongodb/6466277-creez-une-application-express
-server.on('error', errorHandler);
-server.on('listening', () => {
-  const address = server.address();
+httpServer.on('error', errorHandler);
+
+httpServer.on('listening', () => {
+  const address = httpServer.address();
   const bind = typeof address === 'string' ? 'pipe ' + address : 'port ' + port;
   console.log('Listening on ' + bind);
 });
 
-server.listen(process.env.PORT || 3000);
+/*
+httpsServer.on('error', errorHandler);
+httpsServer.on('listening', () => {
+  const address = httpsServer.address();
+  const bind = typeof address === 'string' ? 'pipe ' + address : 'port ' + port;
+  console.log('Listening on ' + bind);
+});
+httpsServer.listen(process.env.PORT || 3000);
+*/
+
+httpServer.listen(process.env.PORT || 3001);
