@@ -80,7 +80,7 @@ export default {
   },
   data() {
     return {
-      windowHeight : window.visualViewport.height,
+      windowHeight : window.innerWidth,
       mobile: false,
       TV : null,
       currentChannel : "-1",
