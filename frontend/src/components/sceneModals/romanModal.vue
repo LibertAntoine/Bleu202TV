@@ -30,17 +30,9 @@
           <div id="Quadruple4" alt="Image du Roman-Photo" class="quadrupleContent" :style="{'background-image':  'url(' + quadruple4  + ')'}" @click="validChoix(3)"> </div>
         </div>
         <div id="genreMenu" ref="genreMenu" class="romanContent" :style="{'background-image':  'url(' + genre1  + ')'}">
-          <div id="blocGenreButton" class="RomanBlocButton">
-          <sui-button color="teal" size="huge" id="garçonButton" class="buttonGenre"  @click="validGenre(0)">
-                Je suis un garçon
-          </sui-button>
-          <sui-button color="teal" size="huge" id="filleButton" class="buttonGenre"  @click="validGenre(1)">
-                Je suis une fille
-          </sui-button>
-          <sui-button color="teal" size="huge" id="oursButton" class="buttonGenre"  @click="validGenre(2)">
-                Je ne sais pas trop
-          </sui-button>
-          </div>
+              <img id="garçonButton" class="buttonGenre" @click="validGenre(0)" src="@/assets/roman/photo/g1.png">
+              <img id="filleButton" class="buttonGenre" @click="validGenre(1)" src="@/assets/roman/photo/g2.png">
+              <img id="oursButton" class="buttonGenre" @click="validGenre(2)" src="@/assets/roman/photo/g3.png">
         </div>
         <div id="musiqueMenu" ref="musiqueMenu" class="romanContent" :style="{'background-image':  'url(' + music1  + ')'}">
           <div id="blocMusicButton" class="RomanBlocButton">
@@ -138,7 +130,7 @@ props: {
     this.currentState = 0
     this.validChoix(0)
     this.ambianceMusic.loop = true;
-    this.ambianceMusic.volume = 0.20
+    this.ambianceMusic.volume = 0.15
     setInterval(() => {
         if(this.open && this.decompte != null) {
             if (this.decompte <= 0 && this.currentAudio.currentTime == this.currentAudio.duration) {
@@ -197,6 +189,7 @@ props: {
         if(this.$refs['find' + number].style.opacity == 0) {
             this.$refs['find' + number].style.opacity = 1;
             this.nbFind++
+            this.findSound.currentTime = 0;
             this.findSound.play()
             if(this.nbFind == 3) this.validChoix(0)
         }
@@ -267,12 +260,13 @@ props: {
     },
     validMusic(number) {
         this.ambianceMusic.pause()
-        if(number == 0) this.ambianceMusic = new Audio(require('@/assets/roman/ambiance/0.mp3'));
+        if(number == 0) this.ambianceMusic = new Audio(require('@/assets/roman/ambiance/0.wav'));
         if(number == 1) this.ambianceMusic = new Audio(require('@/assets/roman/ambiance/1.mp3'));
         if(number == 2) this.ambianceMusic = new Audio(require('@/assets/roman/ambiance/2.mp3'));
-        if(number == 3) this.ambianceMusic = new Audio(require('@/assets/roman/ambiance/3.mp3'));
+        if(number == 3) this.ambianceMusic = new Audio(require('@/assets/roman/ambiance/3.wav'));
         this.ambianceMusic.loop = true;
-        this.ambianceMusic.volume = 0.2;
+        if(number == 2) this.ambianceMusic.volume = 0.3;
+        else this.ambianceMusic.volume = 0.15;
         if(!this.totalMute) this.ambianceMusic.play() 
         this.validChoix(0)
     },
@@ -403,6 +397,13 @@ props: {
             case 104:
                 this.switchGenre()
                 break;
+            case 107:
+                this.ambianceMusic.pause() 
+                this.ambianceMusic = new Audio(require('@/assets/roman/ambiance/default.mp3'));
+                this.ambianceMusic.loop = true;
+                this.ambianceMusic.volume = 0.15;
+                if(!this.totalMute) this.ambianceMusic.play() 
+                break;
             case 110:
                 this.switchGenre()
                 break;   
@@ -416,7 +417,14 @@ props: {
                 this.ambianceMusic.pause() 
                 this.ambianceMusic = new Audio(require('@/assets/roman/ambiance/4.mp3'));
                 this.ambianceMusic.loop = true;
-                this.ambianceMusic.volume = 0.2;
+                this.ambianceMusic.volume = 0.15;
+                if(!this.totalMute) this.ambianceMusic.play() 
+                break;  
+            case 123:
+                this.ambianceMusic.pause() 
+                this.ambianceMusic = new Audio(require('@/assets/roman/ambiance/0.wav'));
+                this.ambianceMusic.loop = true;
+                this.ambianceMusic.volume = 0.15;
                 if(!this.totalMute) this.ambianceMusic.play() 
                 break;    
             case 124:
@@ -440,11 +448,24 @@ props: {
                 this.switchGenre()
                 break;
             case 140:
+                this.ambianceMusic.pause() 
+                this.ambianceMusic = new Audio(require('@/assets/roman/ambiance/4.mp3'));
+                this.ambianceMusic.loop = true;
+                this.ambianceMusic.volume = 0.15;
+                if(!this.totalMute) this.ambianceMusic.play() 
                 this.switchGenre()
                 break;
             case 146:
+                this.ambianceMusic.pause() 
+                this.ambianceMusic = new Audio(require('@/assets/roman/ambiance/default.mp3'));
+                this.ambianceMusic.loop = true;
+                this.ambianceMusic.volume = 0.15;
+                if(!this.totalMute) this.ambianceMusic.play() 
                 this.switchGenre()
-                break;                                                                                                                                                                                                 
+                break;  
+            case 149:
+                if((this.selfie + !this.door + this.drink + this.cake + !this.back) > 2) this.currentState = 162
+                break;                                                                                                                                                                                                
             default:
                 break;
         }
@@ -504,7 +525,6 @@ choix = {
 
 
 .romanContent #find1 {
-    z-index: 1000;
     top : calc(((100vh - 45px) - 56.25vw) / 2.0 + 28.6vw);
     left : 69.2%;
     width : 11%; 
@@ -515,7 +535,6 @@ choix = {
 
 
 .romanContent #find2 {
-    z-index: 1000;
     top : calc(((100vh - 45px) - 56.25vw) / 2.0 + 20.9vw);
     left : 52.8%;
     width : 7.8%; 
@@ -525,7 +544,6 @@ choix = {
 }
 
 .romanContent #find3 {
-    z-index: 1000;
     top : calc(((100vh - 45px) - 56.25vw) / 2.0 + 16.6vw);
     left : 19.0%;
     width : 12%; 
@@ -533,6 +551,44 @@ choix = {
     position: absolute;
 
 }
+
+
+#garçonButton {
+    top : calc(((100vh - 45px) - 56.25vw) / 2.0 + 3.6vw);
+    left : 45.0%;
+    width : 10%; 
+    position: absolute;
+}
+
+#filleButton {
+    top : calc(((100vh - 45px) - 56.25vw) / 2.0 + 3.6vw);
+    left : 58.0%;
+    width : 8%; 
+    position: absolute;
+
+}
+
+
+#oursButton {
+    top : calc(((100vh - 45px) - 56.25vw) / 2.0 + 16.6vw);
+    left : 49.5%;
+    width : 7.5%; 
+    position: absolute;
+    
+}
+
+.buttonGenre {
+    cursor : pointer;
+    filter: saturate(50%);
+    transition : filter 1s;
+}
+
+.buttonGenre:hover {
+    cursor : pointer;
+    filter: saturate(100%);
+}
+
+
 
 .RomanBlocButton {
   position: absolute;
@@ -747,8 +803,16 @@ choix = {
         font-size: 14px;
     }
 
-    .romanContent #findMenu {
+    .romanContent #find1 {
         top : calc(((100vh - 30px) - 56.25vw) / 2.0 + 28.6vw);
+    }
+
+    .romanContent #find2 {
+        top : calc(((100vh - 30px) - 56.25vw) / 2.0 + 20.9vw);
+    }
+
+    .romanContent #find3 {
+        top : calc(((100vh - 30px) - 56.25vw) / 2.0 + 16.6vw);
     }
 
 

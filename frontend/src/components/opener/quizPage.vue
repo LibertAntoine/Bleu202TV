@@ -70,8 +70,8 @@
           <sui-modal-description id="question3" >
             <p class="center lato-Font">Dans le monde d’après, comment aimerais-tu qu’on t’appelle ? <p>
             <div id="acceuil-button" class="center-button">
-              <sui-input  class="lato-Font" @input="checkChange"  placeholder="Coro-Survivor..." focus maxlength="20" />
-              <sui-button class="cambria-Font" @click="answer(textInput)" primary ref="validator3" size="huge" id="button_right" :disabled="textDisabled">
+              <sui-input  class="lato-Font" @input="checkChange" @keypress="keypress" placeholder="Coro-Survivor..." focus maxlength="20" />
+              <sui-button class="cambria-Font" @click="answer(textInput)" primary ref="validator3" size="huge" id="button_right" :disabled="this.textDisabled">
                 Valider
                 </sui-button>
             </div>
@@ -291,7 +291,6 @@ export default {
 
     },
     answer(response) {
-
       if(!this.onChange) {
       this.textDisabled = true;
       this.textInput = "";
@@ -312,12 +311,15 @@ export default {
 
       }
     }, 
+    keypress(e) {
+      if(e.keyCode == '13' && this.textInput != "") this.answer(this.textInput)
+    },
     checkChange(e) {
       this.textInput = e
-      if(e != "" && e.length <= 20) {
-        this.textDisabled = false;
+      if(e != "") {
+        this.$refs.validator3.disabled = false;
       } else {
-        this.textDisabled = true;
+        this.$refs.validator3.disabled = true;
       }
     },
     async valid(response) {
@@ -498,8 +500,8 @@ export default {
 }
 
 #quiz-content {
+  max-height: calc(90vh - 60px) !important;
   overflow : auto;
-  //height : 95%;
 }
 
 .ui.modal {
@@ -518,12 +520,22 @@ export default {
 
 @media (max-width: 570px) {
 
+  #acceuil-content {
+    max-height: calc(76vh - 60px) !important;
+
+  }
+
+
+  #quiz-content {
+    max-height: calc(76vh - 60px) !important;
+  }
+
   .astroTitle {
     height: 25px !important;
   }
 
   #acceuil-header {
-    font-size : 20px !important;
+    font-size : 17px !important;
     line-height: 32px;
     height : 50px !important;
   }
@@ -558,10 +570,7 @@ export default {
     margin : 0 auto !important;
   }
 
-  #quiz-content {
-    max-height: 500px !important;
 
-  }
   /*
   .ui.standard.modal {
     margin : 5px;
@@ -579,12 +588,21 @@ export default {
 
 @media (max-height: 570px) {
 
+  #acceuil-content {
+    max-height: calc(76vh - 60px) !important;
+  }
+
+
+  #quiz-content {
+    max-height: calc(76vh - 60px) !important;
+  }
+
   .astroTitle {
     height: 25px !important;
   }
 
   #acceuil-header {
-    font-size : 20px !important;
+    font-size : 17px !important;
     line-height: 32px;
     height : 50px !important;
   }
@@ -626,20 +644,12 @@ export default {
     max-height: 250px !important;
   }*/
 
-  #quiz-content {
-    max-height: 250px !important;
-
-  }
 
   #acceuil-text {
         font-size : 15px !important;
   }
 
-  #quizModal {
-    padding: 0px;
-    width : 100%;
-    min-width: 0px;
-  }
+
 }
 
 

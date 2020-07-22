@@ -11,9 +11,9 @@
           <span v-if='$logStore.state.connected && $logStore.state.pseudo != ""'> Bonjour <span id="name">{{$logStore.state.pseudo}}</span> </span>
           <span v-else>Bleu202 TV</span>
         </a>
-        <a class="item">
+        <a class="item" @click="toggleLecheVitrine">
           <i class="star icon"></i>
-          Découvrir lèche-vitrine
+          Découvrir Lèche-vitrines
         </a>
         <a class="item" @click="toggleQuiSommes">
           <i class="users icon"></i>
@@ -45,12 +45,14 @@
       </div>
     </div>
     <whoAreWe ref="whoAreWe" />
+    <lecheVitrine ref="lecheVitrine" />
     <legalMentions ref="legalMentions" />
   </div>
 </template>
 
 <script>
 import whoAreWe from '@/components/sideMenu/whoAreWe'
+import lecheVitrine from '@/components/sideMenu/lecheVitrine'
 import legalMentions from '@/components/sideMenu/legalMentions'
 import $ from "jquery";
 
@@ -58,6 +60,7 @@ export default {
   name: 'sidebar',
   components: {
       whoAreWe,
+      lecheVitrine,
       legalMentions
   },
   data() {
@@ -80,6 +83,9 @@ export default {
     },
     toggleQuiSommes() {
         this.$refs.whoAreWe.toggle();
+    },
+    toggleLecheVitrine() {
+        this.$refs.lecheVitrine.toggle();
     },
     toggleMentions() {
         this.$refs.legalMentions.toggle();

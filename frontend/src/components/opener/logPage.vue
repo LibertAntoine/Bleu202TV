@@ -14,11 +14,13 @@
             <p>
             <div id="acceuil-button">
                 <sui-label basic ref="warning" color="red" pointing id="warning">Désolé, je ne reconnais pas ce nom</sui-label>
-                <a ref="buttonQuiz" id="buttonQuiz" @click="goQuiz">J'ai oublié mon nom de virus</a>
-                <sui-input id="logInInput" placeholder="Ecris ton nom..." focus maxlength="40" @input="checkChange"/>
+                <sui-input id="logInInput" placeholder="Ecris ton nom..." focus maxlength="40" @input="checkChange" @keypress="keypress" />
                 <sui-button ref="logButton" primary size="huge" id="buttonLogIn" @click.native="logIn()" disabled class="cambria-Font">
                 Valider
                 </sui-button>
+                <div id="quizBlock">
+                  <p id="quizP"><a ref="buttonQuiz" id="buttonQuiz" @click="goQuiz">J'ai oublié mon nom de virus</a></p>
+                </div>
             </div>
           </sui-modal-description>
           
@@ -58,6 +60,9 @@ export default {
       this.open = !this.open;
       this.$parent.$refs.quizPage.toggle();
     },
+    keypress(e) {
+      if(e.keyCode == '13' && this.textInput && this.textInput != "") this.logIn()
+    },
     async logIn() {
       const data = await this.$logStore.dispatch('logIn', this.textInput)
       if (data.status != 200) {
@@ -77,6 +82,9 @@ export default {
 
 <style lang="scss">
 
+#quizP {
+  text-align: right;
+}
 
 #returnIcon {
   padding-top: 11px;
@@ -95,18 +103,17 @@ export default {
 }
 
 #buttonQuiz {
-  position: absolute;
   color : #2185d0;
-  bottom : 20px;
-  right : 22%;
+  right: 22%;
   font-size : 16px;
   font-weight: bold;
   cursor: pointer;
+
 }
 
 #warning {
   position: absolute;
-  bottom : 20px;
+  bottom : 51px;
   opacity: 0;
   transition : opacity 0.5s;
 }
@@ -159,7 +166,6 @@ export default {
 }
 
   #buttonQuiz {
-    bottom : 20px;
     right : 4%;
   }
 

@@ -84,6 +84,11 @@ export default {
 }
 
 
+#acceuil-content {
+  max-height: calc(90vh - 60px) !important;
+  overflow : auto;
+}
+
 #acceuil-text {
     font-size: 20px;
     width : 100%;

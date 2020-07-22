@@ -5,7 +5,7 @@
         <i id="closeX" class="x icon" @click="toggle"></i>
       </sui-modal-header>
 
-      <sui-modal-content image id="content">
+      <sui-modal-content image id="contentMentions">
           <sui-modal-description id="mentions">
             <p>Conformément aux dispositions des Articles 6-III et 19 de la Loi n°2004-575 du 21 juin 2004 pour la Confiance dans l’économie
             numérique, dite L.C.E.N., il est porté à la connaissance des Utilisateurs du site <span class="bold">leche-vitrine.tv</span> les présentes mentions légales.</p>
@@ -53,8 +53,6 @@
             Par conséquent, toute utilisation, reproduction, diffusion, commercialisation, modification de toute ou partie du siteleche-vitrine.tv, sans
             autorisation de l’Editeur est prohibée et pourra entraînée des actions et poursuites judiciaires telles que notamment prévues par
             le Code de la propriété intellectuelle et le Code civil.</p>
-
-            <h2>ARTICLE 7 : LIENS HYPERTEXTES</h2>
             <p></p>
           </sui-modal-description>
       </sui-modal-content>
@@ -86,12 +84,39 @@ export default {
 
 #mentions {
   width: 100%;
-  height: 600px;
   overflow: auto;
   padding: 5px;
   padding-right: 15px;
   font-size: 15px;
 }
+
+#contentMentions {
+  max-height: calc(90vh - 60px) !important;
+}
+
+@media (max-width: 570px) { 
+  #header {
+      font-size : 17px !important;
+      height : 40px !important;
+  }
+
+  #contentMentions  {
+    max-height: calc(76vh - 60px) !important;
+  }
+}
+
+
+@media (max-height: 570px) { 
+  #header {
+      font-size : 17px !important;
+      height : 40px !important;
+  }
+
+  #contentMentions  {
+    max-height: calc(76vh - 60px) !important;
+  }
+}
+
 
 .bold {
     font-weight: bold;
