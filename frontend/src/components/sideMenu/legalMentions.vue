@@ -131,15 +131,5 @@ export default {
     font-weight: normal;
 }
 
-#closeX {
-  position: absolute;
-  right : 15px;
-  opacity: 40%;
-  transition: opacity 0.3s;
-}
-
-#closeX:hover {
-  opacity: 100%;
-}
 
 </style>

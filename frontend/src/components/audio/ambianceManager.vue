@@ -22,7 +22,7 @@ export default {
   },
   data() {
     return {
-      defaultAudio : new Audio(require('@/audio/RomanPhotoAmbianceSalon.mp3')),
+      defaultAudio : new Audio(require('@/audio/MusiqueQuiz.mp3')),
       currentAmbiance: null
     }
   },
@@ -45,22 +45,22 @@ export default {
         this.currentAmbiance = this.$datas[this.CurrentCanal].ambiance
       }
       if(this.TotalMute == true) {this.currentAmbiance.volume = 0} 
-      else {this.currentAmbiance.volume = 1}
-      this.currentAmbiance.volume = 0.4
+      else {this.currentAmbiance.volume = 0.3}
+      this.currentAmbiance.volume = 0.3
       this.currentAmbiance.play()
     },
     toggleMute() {
       if(this.Mute) {
         this.currentAmbiance.volume = 0
       } else if (!this.TotalMute) {
-        this.currentAmbiance.volume = 0.4
+        this.currentAmbiance.volume = 0.3
       }
     }, 
     toggleTotalMute() {
       if(this.TotalMute) {
         this.currentAmbiance.volume = 0
       } else {
-        this.currentAmbiance.volume = 0.4
+        this.currentAmbiance.volume = 0.3
       }
     }
   }

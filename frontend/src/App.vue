@@ -71,14 +71,11 @@ export default {
         this.currentOpenSong.play();
     },
     toogleOpenSong(newSong) {
-      if(this.currentOpenSong) {
-        if(this.currentOpenSong.paused) {
+          if(this.currentOpenSong) this.currentOpenSong.pause()
           this.currentOpenSong = newSong
           if(!this.totalMute && this.currentOpenSong) {
             this.currentOpenSong.play()
           }
-        }
-      }
     },
     toogleFullscrenn() {
         this.$fullscreen.toggle(document.body, {wrap: false})
@@ -94,6 +91,18 @@ export default {
 </script>
 
 <style lang="scss">
+
+#closeX {
+  position: absolute;
+  right : 15px;
+  opacity: 0.4 !important;
+  transition: opacity 0.3s;
+}
+
+#closeX:hover {
+  opacity: 1 !important;
+}
+
 
 #openH3 {
     font-family: Lato, sans-serif !important;

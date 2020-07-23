@@ -695,16 +695,6 @@ choix = {
   background-color: black// #2d2a2a;
 }
 
-#closeX {
-  position: absolute;
-  right : 15px;
-  opacity: 40%;
-  transition: opacity 0.3s;
-}
-
-#closeX:hover {
-  opacity: 100%;
-}
 
 #romanModal {
   position: fixed;
