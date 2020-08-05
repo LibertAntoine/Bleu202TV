@@ -3,11 +3,12 @@
       <bruitageManager ref="bruitageManager" :TotalMute="$parent.$parent.totalMute" />
       <ambianceManager ref="ambianceManager" :CurrentCanal="currentChannel" :Mute="mute" :TotalMute="$parent.$parent.totalMute" />
       <modalVideo ref="modalVideo0" nbCanal="0" :totalMute="$parent.$parent.totalMute"/>
-      <modalVideo ref="modalVideo1" nbCanal="1" :totalMute="$parent.$parent.totalMute"/>
-      <romanModal ref="modalVideo2" nbCanal="2" :totalMute="$parent.$parent.totalMute"/>
+      <romanModal ref="modalVideo1" nbCanal="1" :totalMute="$parent.$parent.totalMute"/>
+      <modalVideo ref="modalVideo2" nbCanal="2" :totalMute="$parent.$parent.totalMute"/>
       <modalVideo ref="modalVideo3" nbCanal="3" :totalMute="$parent.$parent.totalMute"/>
       <modalVideo ref="modalVideo4" nbCanal="4" :totalMute="$parent.$parent.totalMute"/>
-    <div id="TV-group" class="TVRight" :style="{'height':  windowHeight + 'px', 'width':  windowHeight + 'px'}" >
+      <modalVideo ref="modalVideo6" nbCanal="6" :totalMute="$parent.$parent.totalMute"/>
+    <div id="TV-group" class="TVRight" :style="{'height':  $parent.windowHeight + 'px', 'width':  $parent.windowHeight + 'px'}" >
       <div id="TV">
         <img v-if="!mobile" id="image" alt="Télévision Bleu202TV" src="@/assets/TV/TV_Desktop.png">
         <img v-else id="image" alt="Télévision Bleu202TV" src="@/assets/TV/TV_Mob.png">
@@ -17,7 +18,7 @@
         <div v-show="currentChannel == 3" id="screen" :style="{'background-image':  'url(' + $datas[3].gif  + ')'}"></div>
         <div v-show="currentChannel == 4" id="screen" :style="{'background-image':  'url(' + $datas[4].gif  + ')'}"></div>
         <div id="playBloc" @click="toggle">
-           <img v-show="$logStore.state.connected && currentChannel >= 0 && currentChannel < 4" id="playButton" alt="Button Lancer le contenu" src="@/assets/TV/Ecran/PlayButton.png">
+           <img v-show="$logStore.state.connected && currentChannel >= 0 && currentChannel < 5" id="playButton" alt="Button Lancer le contenu" src="@/assets/TV/Ecran/PlayButton.png">
         </div>
         
 
@@ -31,15 +32,16 @@
           <channelController ref="Channel4" id="Channel4" class="channelController" CanalNb="3"
           :CurrentCanal="currentChannel" Active/>
           <channelController ref="Channel5" id="Channel5" class="channelController" CanalNb="4" 
-          :CurrentCanal="currentChannel"/>
+          :CurrentCanal="currentChannel" Active/>
         </div>
         <div v-show="zapper || !$logStore.state.connected" ref="snowScreen" id="snowScreen"></div>
-        
       </div>
-      <div id="antenneGauche" :style="{'background-image':  'url(' + antenneGauche  + ')'}" @click="moveAntenneGauche"></div>
-      <div id="antenneDroite" :style="{'background-image':  'url(' + antenneDroite  + ')'}" @click="moveAntenneDroite"></div>
-      <div id="boutonRond" :style="{'background-image':  'url(' + boutonRond  + ')'}" @click="moveBoutonRond"></div>
-
+      <div v-if="!antenneGauche" id="antenneGauche" :style="{'background-image':  'url(' + this.$datas[5].antenneGauchePNG  + ')'}" @click="moveAntenneGauche"></div>
+      <div v-if="antenneGauche" id="antenneGauche" :style="{'background-image':  'url(' + this.$datas[5].antenneGaucheGIF  + ')'}"></div>
+      <div v-if="!antenneDroite" id="antenneDroite" :style="{'background-image':  'url(' + this.$datas[5].antenneDroitePNG  + ')'}" @click="moveAntenneDroite"></div>
+      <div v-if="antenneDroite" id="antenneDroite" :style="{'background-image':  'url(' + this.$datas[5].antenneDroiteGIF  + ')'}"></div>
+      <div v-if="!boutonRond" id="boutonRond" :style="{'background-image':  'url(' + this.$datas[5].boutonRondPNG  + ')'}" @click="moveBoutonRond"></div>
+      <div v-if="boutonRond" id="boutonRond" :style="{'background-image':  'url(' + this.$datas[5].boutonRondGIF  + ')'}"></div>
     </div>
       <div v-if="mobile" id="menuTelecommande" class="ui sidebar  item visible bottom horizontal menu push labeled icon demo">
         <channelController ref="Channel1Mob" id="Channel1Mob" class="channelController item" CanalNb="0" 
@@ -55,7 +57,7 @@
        :CurrentCanal="currentChannel" Mobile Active/>
 
        <channelController ref="Channel5Mob" id="Channel5Mob" class="channelController item" CanalNb="4"
-      :CurrentCanal="currentChannel" Mobile/>
+      :CurrentCanal="currentChannel" Mobile Active/>
 
   </div>
 </div>
@@ -80,15 +82,14 @@ export default {
   },
   data() {
     return {
-      windowHeight : window.visualViewport.height,
       mobile: false,
       TV : null,
       currentChannel : "-1",
       zapper : false,
       mute : false,
-      antenneGauche : this.$datas[5].antenneGauchePNG,
-      antenneDroite : this.$datas[5].antenneDroitePNG,
-      boutonRond : this.$datas[5].boutonRondPNG
+      antenneGauche : false,
+      antenneDroite : false,
+      boutonRond : false,
     }
   },
   mounted() {
@@ -101,14 +102,20 @@ export default {
   },
   methods: {
     toggle() {
-      if(this.$logStore.state.connected && this.currentChannel >= 0 && this.currentChannel < 4) {
+      if(this.$logStore.state.connected && this.currentChannel >= 0 && this.currentChannel < 5) {
         this.$refs['modalVideo' + this.currentChannel].toggle();
       }
     },
     zap(number) {
       this.zapper = true
+      this.$parent.currentCollapse = number 
       if(this.$parent.$parent.cartonOpen == false) {
         this.$refs.bruitageManager.playZap()
+      }
+      this.$parent.$refs.decor.radioActive = false
+      if(!this.$datas[5].radio.paused) {
+              this.$datas[5].radio.pause()
+              this.$datas[5].radio.currentTime = 0
       }
       this.currentChannel = number
       if(number != "-1") {
@@ -117,32 +124,42 @@ export default {
       }
     },
     onResize() {
-      this.windowHeight = window.innerHeight;
+      this.$parent.windowHeight = window.innerHeight;
+      this.$parent.windowWidth = window.innerWidth;
       this.mobile = (window.innerWidth < 556 || window.innerHeight < 556) ? true : false;
-      if(this.windowHeight > window.innerWidth - 145 && this.TV.hasClass("TVRight")) {
+      if(this.$parent.windowHeight > window.innerWidth - 145 && this.TV.hasClass("TVRight")) {
         this.TV.removeClass("TVRight")
         this.TV.addClass( "TVCenter" );
       }
-      if(this.windowHeight < window.innerWidth - 145 && this.TV.hasClass("TVCenter")) {
+      if(this.$parent.windowHeight < window.innerWidth - 145 && this.TV.hasClass("TVCenter")) {
         this.TV.removeClass("TVCenter")
         this.TV.addClass("TVRight");
       }
     },
     moveAntenneGauche() {
-      this.antenneGauche = this.$datas[5].antenneGaucheGIF
-      if(!this.$parent.$parent.totalMute) this.$datas[5].antenneGaucheMP3.play()
-      setTimeout(() => {this.antenneGauche = this.$datas[5].antenneGauchePNG}, 1000);
+      this.antenneGauche = true
+      if(!this.$parent.$parent.totalMute) {
+        this.$datas[5].antenneGauche.currentTime = 0
+        this.$datas[5].antenneGauche.play()
+      }
+      setTimeout(() => {this.antenneGauche = false}, 1000);
 
     },
     moveAntenneDroite() {
-      this.antenneDroite = this.$datas[5].antenneDroiteGIF
-      if(!this.$parent.$parent.totalMute) this.$datas[5].antenneDroiteMP3.play()
-      setTimeout(() => {this.antenneDroite = this.$datas[5].antenneDroitePNG}, 1000);
+      this.antenneDroite = true
+      if(!this.$parent.$parent.totalMute) {
+        this.$datas[5].antenneDroite.currentTime = 0
+        this.$datas[5].antenneDroite.play()
+      }
+      setTimeout(() => {this.antenneDroite = false}, 1000);
     },
     moveBoutonRond() {
-      this.boutonRond = this.$datas[5].boutonRondGIF
-      if(!this.$parent.$parent.totalMute) this.$datas[5].boutonRondMP3.play()
-      setTimeout(() => {this.boutonRond = this.$datas[5].boutonRondPNG}, 1000);
+      this.boutonRond = true
+      if(!this.$parent.$parent.totalMute) {
+        this.$datas[5].boutonTV.currentTime = 0
+        this.$datas[5].boutonTV.play()
+      }
+      setTimeout(() => {this.boutonRond = false}, 1000);
     }
   }
 }
@@ -171,7 +188,7 @@ export default {
   position: relative;
   top: -183.3%;
   left: 78.8%;
-  z-index: 4;
+  z-index: 6;
   width: 18%;
   height: 23%;
 
@@ -232,7 +249,7 @@ export default {
 #image {
   position: relative;
   height: 100%;
-  z-index: 2;
+  z-index: 3;
 }
 
 #TV {
@@ -251,7 +268,7 @@ export default {
   background-size: cover;
   height : 61%;
   width : 75%;
-  z-index: 0;
+  z-index: 2;
 }
 
 
@@ -266,7 +283,7 @@ export default {
   background-size: cover;
   height : 61%;
   width : 75%;
-  z-index: 1;
+  z-index: 2;
 }
 
 
@@ -336,11 +353,24 @@ export default {
 }
 
 
-@media (min-width: 556px) and (max-width: 908px) {
+@media (min-width: 556px) and (max-width: 1020px) {
   #TV-group {
     position: absolute;
     height : 500px !important;
     width : 500px !important;
+    bottom: 35px;
+    right: 10%;
+    padding : 10px;
+  }
+
+}
+
+
+@media (min-width: 1020px) and (max-width: 1420px) {
+  #TV-group {
+    position: absolute;
+    height : 650px !important;
+    width : 650px !important;
     bottom: 35px;
     right: 10%;
     padding : 10px;
@@ -395,6 +425,10 @@ export default {
 
 
 @media (max-height: 556px) {
+  #menuTelecommande {
+    height : 55px !important;
+  }
+
   #TV-group {
     padding : 10px;
     bottom: 34px;

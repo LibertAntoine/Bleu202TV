@@ -92,8 +92,30 @@ props: {
               this.$parent.$parent.$parent.currentOpenSong.pause()
               this.$parent.$parent.$parent.currentOpenSong.currentTime = 0
           }
+          if(!this.$parent.$parent.$parent.audioHelp.paused) {
+              this.$parent.$parent.$parent.audioHelp.pause()
+              this.$parent.$parent.$parent.audioHelp.currentTime = 0
+          }
+          this.$parent.$parent.$refs.decor.radioActive = false
+          if(!this.$datas[5].radio.paused) {
+              this.$datas[5].radio.pause()
+              this.$datas[5].radio.currentTime = 0
+          }
 
-        this.videoPlayer.on('ended', () => {this.open = false})
+        this.videoPlayer.on('ended', () => {this.open = false; this.$parent.mute = false; 
+          if(this.$fullscreen.getState() == true && this.fullscreen == true) {
+                      this.$fullscreen.toggle(this.$refs.modalContentVideo, {wrap: false})
+                      setTimeout(() => {
+                        this.$fullscreen.toggle(document.body, {wrap: false})}, 100)
+              
+          }
+
+          setTimeout(() => {
+            if(!this.$parent.$refs.ambianceManager.currentAmbiance.paused) this.$parent.$parent.$refs.tati.open1 = true}, 10000)
+          
+        })
+
+
         this.$parent.mute = true;
       }
       this.open = !this.open;

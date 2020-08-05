@@ -45,7 +45,7 @@
             <sui-button color="orange" size="huge" id="dodoButton" class="buttonMusic"  @click="validMusic(2)">
                     Dodo
             </sui-button>
-            <sui-button color="orange" size="huge" id="enervanteButton" class="buttonMusic"  @click="validMusic(2)">
+            <sui-button color="orange" size="huge" id="enervanteButton" class="buttonMusic"  @click="validMusic(3)">
                     Enervante
             </sui-button>
           </div>
@@ -72,6 +72,7 @@
 
 <script>
 import romanFile from '@/services/romanFile.js'
+import NoSleep from 'nosleep.js';
 
 export default {
   name: 'romanModal',
@@ -120,17 +121,23 @@ props: {
         back: null,
       ambianceMusic: new Audio(require('@/assets/roman/ambiance/default.mp3')),
       decompte: null,
+      noSleep:null,
+      imp1 : new Audio(require("@/assets/roman/audio/imp1.mp3")),
+      imp2 : new Audio(require("@/assets/roman/audio/imp2.mp3")),
+      impJeu : new Audio(require("@/assets/roman/audio/impJeu.mp3")),
+
     }
   },
   watch: {
-    totalMute : function() {this.toggleTotalMute()}
+    //totalMute : function() {this.toggleTotalMute()}
   },
   mounted() {
+    this.noSleep = new NoSleep();
     this.ModalTitle = this.$datas[this.nbCanal].name;
     this.currentState = 0
     this.validChoix(0)
     this.ambianceMusic.loop = true;
-    this.ambianceMusic.volume = 0.15
+    //this.ambianceMusic.volume = 0.25
     setInterval(() => {
         if(this.open && this.decompte != null) {
             if (this.decompte <= 0 && this.currentAudio.currentTime == this.currentAudio.duration) {
@@ -145,35 +152,44 @@ props: {
     toggle() {
       if(this.open) {
           this.$parent.mute = false;
+        this.noSleep.disable();
           if(!this.totalMute) {
               this.ambianceMusic.pause();
               this.currentAudio.pause();
           }
       } else {
+        this.noSleep.enable();
+        if(this.currentState == 149 || this.currentState == 162) {
+            this.currentState = 0; 
+            this.validChoix(0);
+        }
         if(this.$fullscreen.getState() == false) this.$fullscreen.toggle(document.body, {wrap: false})
         this.$parent.mute = true;
           if(!this.$parent.$parent.$parent.currentOpenSong.paused) {
               this.$parent.$parent.$parent.currentOpenSong.pause()
               this.$parent.$parent.$parent.currentOpenSong.currentTime = 0
           }
+          if(!this.$parent.$parent.$parent.audioHelp.paused) {
+              this.$parent.$parent.$parent.audioHelp.pause()
+              this.$parent.$parent.$parent.audioHelp.currentTime = 0
+          }
+          this.$parent.$parent.$refs.decor.radioActive = false
+            if(!this.$datas[5].radio.paused) {
+              this.$datas[5].radio.pause()
+              this.$datas[5].radio.currentTime = 0
+          }
           if(!this.totalMute) {
               this.ambianceMusic.play();
-              if(this.currentAudio.currentTime != this.currentAudio.duration) {
-                this.currentAudio.play();
+              if(this.currentAudio) {
+                if(this.currentAudio.currentTime != this.currentAudio.duration) {
+                    this.currentAudio.play();
+                }
               }
+
           }
       }
       this.open = !this.open;
     },
-    toggleTotalMute() {
-      if(this.totalMute) {
-        this.videoPlayer.setVolume(0)
-      } else {
-        this.videoPlayer.setVolume(1)
-      }
-    },
-
-
     fadePhoto(newPhoto) {
         if(this.currentPhoto) {
             this.currentPhoto.style.opacity = 0
@@ -246,7 +262,7 @@ props: {
         this.currentAudio.pause()
         this.currentAudio.currentTime = 0
     }
-    this.currentAudio = this.nextChoix.audio;
+    this.currentAudio = new Audio(this.nextChoix.audio)
     if(this.open) this.currentAudio.play()
     this.fadePhoto(this.nextPhoto)
     },
@@ -260,13 +276,13 @@ props: {
     },
     validMusic(number) {
         this.ambianceMusic.pause()
-        if(number == 0) this.ambianceMusic = new Audio(require('@/assets/roman/ambiance/0.wav'));
+        if(number == 0) this.ambianceMusic = new Audio(require('@/assets/roman/ambiance/0.mp3'));
         if(number == 1) this.ambianceMusic = new Audio(require('@/assets/roman/ambiance/1.mp3'));
         if(number == 2) this.ambianceMusic = new Audio(require('@/assets/roman/ambiance/2.mp3'));
-        if(number == 3) this.ambianceMusic = new Audio(require('@/assets/roman/ambiance/3.wav'));
+        if(number == 3) this.ambianceMusic = new Audio(require('@/assets/roman/ambiance/3.mp3'));
         this.ambianceMusic.loop = true;
-        if(number == 2) this.ambianceMusic.volume = 0.3;
-        else this.ambianceMusic.volume = 0.15;
+        //if(number == 2) this.ambianceMusic.volume = 0.3;
+        //else this.ambianceMusic.volume = 0.15;
         if(!this.totalMute) this.ambianceMusic.play() 
         this.validChoix(0)
     },
@@ -324,6 +340,14 @@ props: {
                 if(this.genre == 1) this.currentState = 150
                 if(this.genre == 2) this.currentState = 151
                 break;
+            case 3:
+                setTimeout(() => {
+                    if(this.currentState == 3 && this.open == true) {
+                        this.imp1.currentTime = 0;
+                        this.imp1.play();
+                    }
+                }, 25000);
+                break; 
             case 5:
                 if(this.genre == 1) this.currentState = 152
                 if(this.genre == 2) this.currentState = 153
@@ -331,7 +355,15 @@ props: {
             case 6:
                 if(this.genre == 1) this.currentState = 154
                 if(this.genre == 2) this.currentState = 155
-                break;  
+                break; 
+            case 7:
+                setTimeout(() => {
+                    if(this.currentState == 7 && this.open == true) {
+                        this.imp1.currentTime = 0;
+                        this.imp1.play();
+                    }
+                }, 25000);
+                break;   
             case 9:
                 this.switchGenre()
                 break;  
@@ -340,6 +372,14 @@ props: {
                 break; 
             case 18:
                 this.switchGenre()
+                break; 
+            case 21:
+                setTimeout(() => {
+                    if(this.currentState == 21 && this.open == true) {
+                        this.imp2.currentTime = 0;
+                        this.imp2.play();
+                    }
+                }, 25000);
                 break; 
             case 24:
                 this.switchGenre()
@@ -372,7 +412,15 @@ props: {
                 break; 
             case 60:
                 this.switchGenre()
-                break;   
+                break;
+            case 63:
+                setTimeout(() => {
+                    if(this.currentState == 63 && this.open == true) {
+                        this.imp2.currentTime = 0;
+                        this.imp2.play();
+                    }
+                }, 25000);
+                break;    
             case 67:
                 this.switchGenre()
                 break;
@@ -401,14 +449,28 @@ props: {
                 this.ambianceMusic.pause() 
                 this.ambianceMusic = new Audio(require('@/assets/roman/ambiance/default.mp3'));
                 this.ambianceMusic.loop = true;
-                this.ambianceMusic.volume = 0.15;
+                //this.ambianceMusic.volume = 0.25;
                 if(!this.totalMute) this.ambianceMusic.play() 
+                setTimeout(() => {
+                    if(this.currentState == 107 && this.open == true) {
+                        this.imp2.currentTime = 0;
+                        this.imp2.play();
+                    }
+                }, 25000);           
                 break;
             case 110:
                 this.switchGenre()
                 break;   
             case 113:
                 this.switchGenre()
+                break; 
+            case 116:
+                setTimeout(() => {
+                    if(this.currentState == 116 && this.open == true) {
+                        this.impJeu.currentTime = 0;
+                        this.impJeu.play();
+                    }
+                }, 45000);
                 break; 
             case 117:
                 this.switchGenre()
@@ -417,14 +479,22 @@ props: {
                 this.ambianceMusic.pause() 
                 this.ambianceMusic = new Audio(require('@/assets/roman/ambiance/4.mp3'));
                 this.ambianceMusic.loop = true;
-                this.ambianceMusic.volume = 0.15;
+                //this.ambianceMusic.volume = 0.15;
                 if(!this.totalMute) this.ambianceMusic.play() 
+                break; 
+            case 121:
+                setTimeout(() => {
+                    if(this.currentState == 121 && this.open == true) {
+                        this.imp1.currentTime = 0;
+                        this.imp1.play();
+                    }
+                }, 25000);
                 break;  
             case 123:
                 this.ambianceMusic.pause() 
-                this.ambianceMusic = new Audio(require('@/assets/roman/ambiance/0.wav'));
+                this.ambianceMusic = new Audio(require('@/assets/roman/ambiance/0.mp3'));
                 this.ambianceMusic.loop = true;
-                this.ambianceMusic.volume = 0.15;
+                //this.ambianceMusic.volume = 0.15;
                 if(!this.totalMute) this.ambianceMusic.play() 
                 break;    
             case 124:
@@ -436,22 +506,18 @@ props: {
                 if(this.$logStore.state.favoriteDrink == 3) this.currentState += 2
                 break;  
             case 132:
-                if(this.$logStore.state.favoriteCharacter == 1) this.currentState++
+                if(this.$logStore.state.favoriteCharacter == 2) this.currentState++
                 break; 
             case 134:
-                if(this.$logStore.state.favoriteCharacter == 1) this.currentState += 22
+                if(this.$logStore.state.favoriteCharacter == 2) this.currentState += 22
                 if(this.selfie == 1) this.currentState += 3
                 this.switchGenre()
                 break; 
-            case 137:
-                if(this.$logStore.state.favoriteCharacter == 1) this.currentState += 3
-                this.switchGenre()
-                break;
             case 140:
                 this.ambianceMusic.pause() 
                 this.ambianceMusic = new Audio(require('@/assets/roman/ambiance/4.mp3'));
                 this.ambianceMusic.loop = true;
-                this.ambianceMusic.volume = 0.15;
+                //this.ambianceMusic.volume = 0.15;
                 if(!this.totalMute) this.ambianceMusic.play() 
                 this.switchGenre()
                 break;
@@ -459,7 +525,7 @@ props: {
                 this.ambianceMusic.pause() 
                 this.ambianceMusic = new Audio(require('@/assets/roman/ambiance/default.mp3'));
                 this.ambianceMusic.loop = true;
-                this.ambianceMusic.volume = 0.15;
+                //this.ambianceMusic.volume = 0.25;
                 if(!this.totalMute) this.ambianceMusic.play() 
                 this.switchGenre()
                 break;  
@@ -554,14 +620,14 @@ choix = {
 
 
 #garçonButton {
-    top : calc(((100vh - 45px) - 56.25vw) / 2.0 + 3.6vw);
+    top : calc(((100vh - 45px) - 56.25vw) / 2.0 + 6vw);
     left : 45.0%;
     width : 10%; 
     position: absolute;
 }
 
 #filleButton {
-    top : calc(((100vh - 45px) - 56.25vw) / 2.0 + 3.6vw);
+    top : calc(((100vh - 45px) - 56.25vw) / 2.0 + 6vw);
     left : 58.0%;
     width : 8%; 
     position: absolute;
@@ -570,7 +636,7 @@ choix = {
 
 
 #oursButton {
-    top : calc(((100vh - 45px) - 56.25vw) / 2.0 + 16.6vw);
+    top : calc(((100vh - 45px) - 56.25vw) / 2.0 + 19.6vw);
     left : 49.5%;
     width : 7.5%; 
     position: absolute;

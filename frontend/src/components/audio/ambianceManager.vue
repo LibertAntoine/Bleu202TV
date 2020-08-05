@@ -27,11 +27,6 @@ export default {
     }
   },
   mounted() {
-    this.$datas[0].ambiance.loop = true;
-    this.$datas[1].ambiance.loop = true;
-    this.$datas[2].ambiance.loop = true;
-    this.$datas[3].ambiance.loop = true;
-    this.$datas[4].ambiance.loop = true;
     this.defaultAudio.loop = true;
     this.currentAmbiance = this.defaultAudio
   },
@@ -42,25 +37,35 @@ export default {
       if(this.CurrentCanal < 0 || this.CurrentCanal > 4 || !this.$logStore.state.connected) {
         this.currentAmbiance = this.defaultAudio
       } else {
-        this.currentAmbiance = this.$datas[this.CurrentCanal].ambiance
+        this.currentAmbiance = new Audio(this.$datas[this.CurrentCanal].ambiance)
+        this.currentAmbiance.loop = true;
       }
-      if(this.TotalMute == true) {this.currentAmbiance.volume = 0} 
-      else {this.currentAmbiance.volume = 0.3}
-      this.currentAmbiance.volume = 0.3
-      this.currentAmbiance.play()
+      if(this.TotalMute == true) {
+        this.currentAmbiance.pause()
+        //this.currentAmbiance.volume = 0
+        } 
+      else {
+        this.currentAmbiance.play()
+        //this.currentAmbiance.volume = 0.3
+        }
     },
     toggleMute() {
       if(this.Mute) {
-        this.currentAmbiance.volume = 0
+        //this.currentAmbiance.volume = 0
+        this.currentAmbiance.pause()
       } else if (!this.TotalMute) {
-        this.currentAmbiance.volume = 0.3
+        this.currentAmbiance.play()
+        //this.currentAmbiance.volume = 0.3
       }
     }, 
     toggleTotalMute() {
       if(this.TotalMute) {
-        this.currentAmbiance.volume = 0
+        //this.currentAmbiance.volume = 0
+        this.currentAmbiance.pause()
       } else {
-        this.currentAmbiance.volume = 0.3
+        //this.currentAmbiance.volume = 0.3
+        this.currentAmbiance.play()
+
       }
     }
   }

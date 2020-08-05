@@ -73,7 +73,7 @@ export default {
       } else {
         this.toggle()
         this.$parent.$parent.$refs.scene.$refs.television.zap('0')
-        this.$parent.$parent.toogleOpenSong(this.$datas[5].openConnect)
+        //this.$parent.$parent.toogleOpenSong(this.$datas[5].openConnect)
       }
     }
   }

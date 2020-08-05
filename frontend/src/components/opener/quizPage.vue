@@ -157,7 +157,7 @@
           <sui-modal-description id="question4" >
             <p class="center lato-Font">Dans le monde d’après, comment aimerais-tu qu’on t’appelle ? <p>
             <div id="acceuil-button" class="center-button">
-              <sui-input  class="lato-Font" @input="checkChange" @keypress="keypress" placeholder="Coro-Survivor..." focus maxlength="20" />
+              <sui-input  class="lato-Font" @input="checkChange" @keypress="keypress" placeholder="Coro-Survivor..." focus maxlength="18" />
               <sui-button class="cambria-Font" @click="answer(textInput)" primary ref="validator3" size="huge" id="button_right" :disabled="this.textDisabled">
                 Valider
                 </sui-button>
@@ -232,7 +232,7 @@ export default {
         gateau1 : require('@/assets/quiz/Gateau/Gateau1.jpg'),
         gateau2 : require('@/assets/quiz/Gateau/Gateau2.jpg'),
         gateau3 : require('@/assets/quiz/Gateau/Gateau3.jpg'),
-        boisson1 : require('@/assets/quiz/Boisson/Boisson1.png'),
+        boisson1 : require('@/assets/quiz/Boisson/Boisson1.jpg'),
         boisson2 : require('@/assets/quiz/Boisson/Boisson2.png'),
         boisson3 : require('@/assets/quiz/Boisson/Boisson3.jpg'),
         signe1 : require('@/assets/quiz/Astro/Signe1.jpg'),
@@ -247,8 +247,8 @@ export default {
         signe10 : require('@/assets/quiz/Astro/Signe10.jpg'),
         signe11 : require('@/assets/quiz/Astro/Signe11.jpg'),
         signe12 : require('@/assets/quiz/Astro/Signe12.jpg'),
-        perso1 : require('@/assets/quiz/Perso/perso1.png'),
-        perso2 : require('@/assets/quiz/Perso/perso2.png')
+        perso1 : require('@/assets/quiz/Perso/perso1.jpg'),
+        perso2 : require('@/assets/quiz/Perso/perso2.jpg')
     }
   },
   methods: {
