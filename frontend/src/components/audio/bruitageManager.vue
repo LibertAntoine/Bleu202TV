@@ -14,9 +14,6 @@ export default {
       zap : new Audio(require('@/audio/zap.mp3')),
     }
   },
-  mounted() {
-    this.$datas[0].ambiance.loop = true;
-  },
   methods: {
     playZap() {
         if(!this.TotalMute) {

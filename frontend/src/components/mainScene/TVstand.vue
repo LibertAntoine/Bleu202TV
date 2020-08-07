@@ -13,12 +13,12 @@ export default {
 <style lang="scss" >
 #meuble {
   position : absolute;
-  height : 1000px;
+  height : 1100px;
   width : 2000px;
-  bottom: -858px;
+  bottom: -1010px;
   left: 20%;
   margin-left : -500px;
-  z-index: -1;
+  z-index: 2;
 }
 
 #meubleTV {
@@ -34,7 +34,14 @@ export default {
 
 @media (max-width: 556px) {
   #meuble {
-    bottom: -810px;
+    bottom: -970px;
   }
 }
+@media (max-height: 556px) {
+  #meuble {
+    bottom: -1020px;
+  }
+}
+
+
 </style>

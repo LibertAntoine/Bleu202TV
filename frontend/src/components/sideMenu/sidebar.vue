@@ -91,11 +91,18 @@ export default {
         this.$refs.legalMentions.toggle();
     },
     logOut() {
+      if(!this.$datas[5].radio.paused) {
+              this.$datas[5].radio.pause()
+              this.$datas[5].radio.currentTime = 0
+      }
+      if(!this.$datas[5].audioHelp.paused) {
+              this.$datas[5].audioHelp.pause()
+              this.$datas[5].audioHelp.currentTime = 0
+      }
       this.$logStore.commit('logOut')
       this.toggle()
       this.$parent.$refs.scene.$refs.television.zap("-1")
     }
-
   }
 }
 </script>
@@ -144,7 +151,7 @@ export default {
     font-size: 15px;
     font-weight : bold;
     cursor : pointer;
-    background: radial-gradient(at 80% 00%, rgba(black, 0.2) 10%, rgba(black, 0.0) 65%);
+    background: radial-gradient(at 80% 00%, rgba(black, 0.05) 10%, rgba(black, 0.0) 65%);
 }
 
 #menu {

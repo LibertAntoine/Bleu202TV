@@ -1,11 +1,11 @@
 var fs = require('fs');
 const http = require('http');
-/*
+
 const https = require('https');
-*/
+
 const app = require('./app');
 
-/*
+
 // Certificate
 const privateKey = fs.readFileSync('/etc/letsencrypt/live/leche-vitrines.tv/privkey.pem', 'utf8');
 const certificate = fs.readFileSync('/etc/letsencrypt/live/leche-vitrines.tv/cert.pem', 'utf8');
@@ -16,7 +16,7 @@ const credentials = {
 	cert: certificate,
 	ca: ca
 };
-*/
+
 
 // normelize the port used. 
 const normalizePort = val => {
@@ -55,7 +55,7 @@ const normalizePort = val => {
   };
 
   const httpServer = http.createServer(app);
-  //const httpsServer = https.createServer(credentials, app);
+  const httpsServer = https.createServer(credentials, app);
 
 // TODO : Partie à revoir https://openclassrooms.com/fr/courses/6390246-passez-au-full-stack-avec-node-js-express-et-mongodb/6466277-creez-une-application-express
 httpServer.on('error', errorHandler);
@@ -66,7 +66,7 @@ httpServer.on('listening', () => {
   console.log('Listening on ' + bind);
 });
 
-/*
+
 httpsServer.on('error', errorHandler);
 httpsServer.on('listening', () => {
   const address = httpsServer.address();
@@ -74,6 +74,6 @@ httpsServer.on('listening', () => {
   console.log('Listening on ' + bind);
 });
 httpsServer.listen(process.env.PORT || 3000);
-*/
+
 
 httpServer.listen(process.env.PORT || 3001);

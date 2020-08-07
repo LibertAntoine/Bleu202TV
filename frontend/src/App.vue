@@ -2,9 +2,11 @@
   <div id="app">
       <opener ref="opener"/>
       <sidebar ref="sidebar" />
-      <scene ref="scene" />
+      <scene ref="scene"/>
       <div id="audioMute"> 
-        <i v-show="!totalMute" id="mute" class="bell icon big" @click="() => {totalMute = true; this.audioHelp.pause(); this.currentOpenSong.pause()}"></i>
+        <i v-show="!totalMute" id="mute" class="bell icon big" @click="() => {totalMute = true; this.audioHelp.pause();
+          if(this.$refs.scene.$refs.decor.radioActive == true) this.$refs.scene.$refs.decor.radioActiveAnim();
+          this.currentOpenSong.pause()}"></i>
         <i v-show="totalMute"  id="demute" class="bell slash icon big" @click="() => {totalMute = false; this.audioHelp.pause(); this.currentOpenSong.pause()}"></i>
         <i v-show="!expand" id="demute" class="expand icon big" @click="toogleFullscrenn"></i>
         <i v-show="expand" id="demute" class="compress icon big" @click="toogleFullscrenn"></i>
@@ -18,7 +20,7 @@
                 Je découvre 
                 <!-- <i class="angle double right icon"></i> -->
           </sui-button>
-          <h3 id="openH3">Entre le 27 et le 31 juillet, decouvrez de nouveaux contenus chaque jour qui viendront s'ajouter à ceux des jours précédents. Puis revenez les explorer jusqu'à la fin de l'été.</h3>
+          <h3 id="openH3"><span id="underline" class="bold">Pour une expérience complète, n'hésitez pas à cliquer un peu partout sur les pages du site !</span> <br />Et revenez les explorer jusqu'à la fin de l'été.</h3>
         </div>
         <img id="logoCompagnieOpen" alt="Logo de la compagnie bleu 202" src="@/assets/Logos/CompagnieBleu202.png">
       </div>
@@ -63,22 +65,19 @@ export default {
   },
   methods: {
     begin() {
-        if(this.$logStore.state.connected) this.currentOpenSong = this.$datas[5].openConnect
-        else this.currentOpenSong = this.$datas[5].openNoConnect
+        if(this.$logStore.state.connected) this.currentOpenSong = new Audio(this.$datas[5].openConnect)
+        else this.currentOpenSong = new Audio(this.$datas[5].openNoConnect)
         this.toogleFullscrenn();
         this.cartonOpen = false;
         this.$refs.scene.$refs.television.$refs.ambianceManager.toggleAmbiance()
         this.currentOpenSong.play();
     },
     toogleOpenSong(newSong) {
-      if(this.currentOpenSong) {
-        if(this.currentOpenSong.paused) {
-          this.currentOpenSong = newSong
+          if(this.currentOpenSong) this.currentOpenSong.pause()
+          this.currentOpenSong = new Audio(newSong)
           if(!this.totalMute && this.currentOpenSong) {
             this.currentOpenSong.play()
           }
-        }
-      }
     },
     toogleFullscrenn() {
         this.$fullscreen.toggle(document.body, {wrap: false})
@@ -95,17 +94,30 @@ export default {
 
 <style lang="scss">
 
+#closeX {
+  position: absolute;
+  right : 15px;
+  opacity: 0.4 !important;
+  transition: opacity 0.3s;
+}
+
+#closeX:hover {
+  opacity: 1 !important;
+}
+
+
 #openH3 {
-    font-family: Lato, sans-serif !important;
+  font-family: Lato, sans-serif !important;
   font-weight: normal;
   font-style: italic;
   font-size: 18px;
   color : white;
+
 }
 
 #openH1 {
   font-family: Bodoni MT, serif !important;
-  font-size: 60px;
+  font-size: 58px;
   color : white;
 }
 
@@ -115,6 +127,10 @@ export default {
   font-style: italic;
   font-size: 25px;
   color : white;
+}
+
+#underline {
+  text-decoration: underline;
 }
 
 #button_begin {
@@ -130,6 +146,7 @@ body {
   line-height: 0px !important;
   height: 100%;
   overflow: hidden;
+  width: 100%;
 }
 
 #app {
@@ -139,6 +156,8 @@ body {
   height : 100%;
   overflow: hidden;
   position:relative;
+  background-color: #27252d;
+  width: 100%;
 }
 
 #audioMute {
@@ -148,7 +167,7 @@ body {
   cursor : pointer;
   color: #23a1d3;
   z-index: 1001;
-  background: radial-gradient(at 40% 00%, rgba(black, 0.2) 10%, rgba(black, 0.0) 75%);
+  background: radial-gradient(at 40% 00%, rgba(black, 0.1) 10%, rgba(black, 0.0) 75%);
 }
 
 #cartonOpener {
@@ -188,6 +207,7 @@ body {
 
   #openH3 {
     font-size: 16px;
+
 
   }
 

@@ -66,21 +66,11 @@
           </sui-modal-description>
           </div>
 
-          <div ref="question3" class="question">
-          <sui-modal-description id="question3" >
-            <p class="center lato-Font">Dans le monde d’après, comment aimerais-tu qu’on t’appelle ? <p>
-            <div id="acceuil-button" class="center-button">
-              <sui-input  class="lato-Font" @input="checkChange" @keypress="keypress" placeholder="Coro-Survivor..." focus maxlength="20" />
-              <sui-button class="cambria-Font" @click="answer(textInput)" primary ref="validator3" size="huge" id="button_right" :disabled="this.textDisabled">
-                Valider
-                </sui-button>
-            </div>
-          </sui-modal-description>
-          </div>
 
 
-          <div ref="question4" id="question4" class="question">
-          <sui-modal-description id="question4" class="questionContent">
+
+          <div ref="question3" id="question3" class="question">
+          <sui-modal-description id="question3" class="questionContent">
             <p class="center lato-Font">Dans le monde d'avant, c’était quoi ton signe astrologique ?<p>
             <div id="acceuil-button" class="astro-button">
               <sui-card-group :items-per-row="4">
@@ -163,6 +153,19 @@
           </sui-modal-description>
           </div>
 
+          <div ref="question4" class="question">
+          <sui-modal-description id="question4" >
+            <p class="center lato-Font">Dans le monde d’après, comment aimerais-tu qu’on t’appelle ? <p>
+            <div id="acceuil-button" class="center-button">
+              <sui-input  class="lato-Font" @input="checkChange" @keypress="keypress" placeholder="Coro-Survivor..." focus maxlength="18" />
+              <sui-button class="cambria-Font" @click="answer(textInput)" primary ref="validator3" size="huge" id="button_right" :disabled="this.textDisabled">
+                Valider
+                </sui-button>
+            </div>
+          </sui-modal-description>
+          </div>
+
+
           <div ref="question5" class="question" >
           <sui-modal-description id="question5">
             <p class="center lato-Font">Allez, plus qu’une question ! <br/>
@@ -172,7 +175,7 @@
                 <sui-card class="radioCardfix " @click="valid('1')">
                   <sui-image :src="perso1" class="persoQuiz"/>
                   <sui-card-content class="quizContentHeader">
-                    <sui-card-header class="quizHeader">Isadora</sui-card-header>
+                    <sui-card-header class="quizHeader">Féodora</sui-card-header>
                   </sui-card-content>
                 </sui-card>
                 <sui-card class="radioCardfix persoQuiz" @click="valid('2')"> 
@@ -190,7 +193,7 @@
 
           <div ref="bilan" class="question">
           <sui-modal-description id="bilan" >
-            <p class="center lato-Font">Merci <span class="bold">{{reponses[2]}}</span> ! <br /> Après avoir consulté tes réponses à nos questions, il semblerait que ton nom de virus soit :<p>
+            <p class="center lato-Font">Merci <span class="bold">{{reponses[3]}}</span> ! <br /> Après avoir consulté tes réponses à nos questions, il semblerait que ton nom de virus soit :<p>
             <p id="uniqueName">{{$logStore.state.uniqueName}}<p>
             <p class="center lato-Font">Garde le bien en tête, ce sera ton mot de passe pour les prochains jours, si tu veux revenir.<p>
             <div id="acceuil-button">
@@ -229,7 +232,7 @@ export default {
         gateau1 : require('@/assets/quiz/Gateau/Gateau1.jpg'),
         gateau2 : require('@/assets/quiz/Gateau/Gateau2.jpg'),
         gateau3 : require('@/assets/quiz/Gateau/Gateau3.jpg'),
-        boisson1 : require('@/assets/quiz/Boisson/Boisson1.png'),
+        boisson1 : require('@/assets/quiz/Boisson/Boisson1.jpg'),
         boisson2 : require('@/assets/quiz/Boisson/Boisson2.png'),
         boisson3 : require('@/assets/quiz/Boisson/Boisson3.jpg'),
         signe1 : require('@/assets/quiz/Astro/Signe1.jpg'),
@@ -244,8 +247,8 @@ export default {
         signe10 : require('@/assets/quiz/Astro/Signe10.jpg'),
         signe11 : require('@/assets/quiz/Astro/Signe11.jpg'),
         signe12 : require('@/assets/quiz/Astro/Signe12.jpg'),
-        perso1 : require('@/assets/quiz/Perso/perso1.png'),
-        perso2 : require('@/assets/quiz/Perso/perso2.png')
+        perso1 : require('@/assets/quiz/Perso/perso1.jpg'),
+        perso2 : require('@/assets/quiz/Perso/perso2.jpg')
     }
   },
   methods: {
@@ -300,8 +303,25 @@ export default {
       this.reponses.push(response);
       setTimeout(() => {
         this.$refs['question' + this.question].style.display = "none" 
+        if(this.question == 1) {
+          if(response == 1 || response == 3) this.$parent.$parent.toogleOpenSong(this.$datas[5].openQ1a)
+          if(response == 2) this.$parent.$parent.toogleOpenSong(this.$datas[5].openQ1b)
+          setTimeout(() => {
+            if (this.question == 2) this.$parent.$parent.toogleOpenSong(this.$datas[5].openQ2)
+          }, 2000);
+        } else if (this.question == 2) {
+          if(response == 1) this.$parent.$parent.toogleOpenSong(this.$datas[5].openQ2a)
+          if(response == 2) this.$parent.$parent.toogleOpenSong(this.$datas[5].openQ2b)
+          if(response == 3) this.$parent.$parent.toogleOpenSong(this.$datas[5].openQ2c)
+          setTimeout(() => {
+            if (this.question == 3) this.$parent.$parent.toogleOpenSong(this.$datas[5].openQ3)
+          }, 2000);
+        } else if (this.question == 3) {
+            this.$parent.$parent.toogleOpenSong(this.$datas[5].openQ4)
+        } else if (this.question == 4) {
+            this.$parent.$parent.toogleOpenSong(this.$datas[5].openQ5)
+        }
         this.question++
-        this.$parent.$parent.toogleOpenSong(this.$datas[5]['openQ' + this.question])
         this.$refs['question' + this.question].style.display = "block" 
         }, 500);
               setTimeout(() => {
@@ -325,6 +345,13 @@ export default {
     async valid(response) {
       if(!this.onChange) {
       this.onChange = true;
+
+      if(response == 1) this.$parent.$parent.toogleOpenSong(this.$datas[5].openQ5a)
+      if(response == 2) this.$parent.$parent.toogleOpenSong(this.$datas[5].openQ5b)
+      setTimeout(() => {
+        this.$parent.$parent.toogleOpenSong(this.$datas[5].endQuiz)
+      }, 3000);
+
       this.$refs['question' + this.question].style.opacity = 0;
       this.$refs.returnIcon.style.display = "none" 
       this.reponses.push(response);
@@ -451,16 +478,6 @@ export default {
     font-weight: normal;
 }
 
-#closeX {
-  position: absolute;
-  right : 15px;
-  opacity: 40%;
-  transition: opacity 0.3s;
-}
-
-#closeX:hover {
-  opacity: 100%;
-}
 
 .ui.standard.modal {
   max-height: 95%;

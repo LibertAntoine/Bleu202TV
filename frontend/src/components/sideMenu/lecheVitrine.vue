@@ -14,11 +14,14 @@
               Tous les ans, depuis 11 ans déjà, un spectacle différent est proposé aux Alençonnais et aux gens de passage sur Alençon fin juillet.
               De plus en plus de monde assistent aux représentations, avec ces dernières années entre 250 et 300 spectateurs chaque soir.</p>
 
+              <div class="imageBloc"><img id="leche1" src="@/assets/modal/leche1.png"></div>
 
               <h3>Le concept :</h3>
+              <div>
+                
               <p>Créer un spectacle en 3 semaines qui se jouera en déambulation dans les rues d’Alençon pendant 5 jours, tous les soirs. Le spectacle est créé par quatre comédien.ne.s – metteur.e.s en scène et une chorégraphe – professionnel.le.s de la Compagnie Bleu 202.
               Plus environ 15 stagiaires en théâtre et 15 stagiaires en danse.</p>
-
+<img id="leche3" src="@/assets/modal/leche3.png">
               <p>Les répétitions ont lieu au mois de juillet, tous les jours du lundi au vendredi de 10h
               à 18h. Le matin est consacré au training danse et théâtre. L’après-midi est consacré à la confection du spectacle.</p>
 
@@ -27,9 +30,11 @@
               <p>Le stage et le spectacle sont offerts aux stagiaires et au public par la Ville d’Alençon.</p>
 
               <p>Cette année, Lèche-Vitrines a dû exceptionnellement se réinventer vis-à-vis de la situation sanitaire actuelle. Le spectacle a été totalement pensé et écrit différemment pour internet.</p>
-
+              
+              </div>
 
               <h3>Pourquoi « Lèche-Vitrines » ?</h3>
+              <img id="leche2" src="@/assets/modal/leche2.png">
               <p>Initialement, le spectacle se jouait dans certaines vitrines du centre-ville d’Alençon. En 2010, la première édition portait sur la fièvre acheteuse, d’où le nom…
               Par la suite, le spectacle étant identifié ainsi, nous avons conservé ce titre tout en changeant le thème : les contes, le polar, voyage dans le temps, l’amour…</p>
 
@@ -45,7 +50,10 @@
               <span class="bold">2018</span> : Lèche-Vitraux<br />
               <span class="bold">2019</span> : Lèche-Vitr’in Love<br />
               <span class="bold">2020</span> : Ne Lèchez Plus Les Vitrines</p>
+              
+<br /><br />
             </div>
+            
 
           </sui-modal-description>
       </sui-modal-content>
@@ -74,6 +82,31 @@ export default {
 </script>
 
 <style lang="scss">
+
+.imageBloc {
+  width : 100%;
+   text-align: center
+}
+
+#leche1 {
+  align-content: center;
+  margin : 0 auto;
+  width : 60%;
+}
+
+#leche2 {
+  float : right;
+  margin-left : 20px;
+  width : 40%;
+}
+
+#leche3 {
+  float : left;
+  margin-right : 20px;
+  width : 50%;
+}
+
+
 #header {
     padding : 6px !important;
     padding-left : 20px !important;
@@ -96,6 +129,23 @@ export default {
   #contentLecheVitrine  {
     max-height: calc(76vh - 60px) !important;
   }
+
+  #leche1 {
+    width : 100%;
+  }
+
+#leche2 {
+
+  width : 100%;
+}
+
+#leche3 {
+
+  width : 100%;
+}
+
+
+
 }
 
 
@@ -109,33 +159,26 @@ export default {
 #contentLecheVitrine .description {
   width: 100% !important;
   text-justify: auto;
+  padding-bottom : 40px;
 }
 
 #contentLecheVitrine p {
   font-family: Lato, sans-serif !important;
   text-align: justify;
+  font-size : 20px;
 }
 
 
 #contentLecheVitrine h2 {
   font-family: Cambria, sans-serif !important;
+  font-size : 28px;
 }
 
 #contentLecheVitrine h3 {
   font-family: Cambria, sans-serif !important;
+  font-size : 25px;
 }
 
 
-
-#closeX {
-  position: absolute;
-  right : 15px;
-  opacity: 40%;
-  transition: opacity 0.3s;
-}
-
-#closeX:hover {
-  opacity: 100%;
-}
 
 </style>

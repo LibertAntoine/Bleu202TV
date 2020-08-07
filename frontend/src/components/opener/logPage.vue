@@ -73,7 +73,7 @@ export default {
       } else {
         this.toggle()
         this.$parent.$parent.$refs.scene.$refs.television.zap('0')
-        this.$parent.$parent.toogleOpenSong(this.$datas[5].openConnect)
+        //this.$parent.$parent.toogleOpenSong(this.$datas[5].openConnect)
       }
     }
   }
@@ -142,18 +142,6 @@ export default {
     font-size: 36px;
     font-weight: normal;
 }
-
-#closeX {
-  position: absolute;
-  right : 15px;
-  opacity: 40%;
-  transition: opacity 0.3s;
-}
-
-#closeX:hover {
-  opacity: 100%;
-}
-
 
 @media (max-width: 658px) {
   #logInInput {
