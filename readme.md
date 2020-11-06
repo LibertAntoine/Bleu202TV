@@ -6,19 +6,21 @@
 
 - [**Building configuration**](#Building-configuration)
   * [**Clone repository**](#clone-repository)
-  * [**Linux**](#linux)
-    - [**Add dependencies**](#add-dependencies)
-    - [**Build**](#build)
-    - [**Execute**](#execute)
-  * [**Windows**](#windows)
-    
+  * [**Frontend**](#frontend)
+    - [**Complete .env file**](#complete-.env-file)
+    - [**Launch local frontend**](#launch-local-frontend)
+    - [**Build frontend**](#build-frontend)
+  * [**Backend**](#backend)
+    - [**Complete .env**](#complete-.env)
+    - [**Launch backend**](#launch-backend)
+
 - [**Presentation**](#presentation)
 
 - [**Main Features**](#main-features)
 
-- [**Contributors**](#contributors)
-
 - [**Dependencies**](#dependencies)
+  * [**Frontend Dependencies**](#frontend-dependencies)
+  * [**Backend Dependencies**](#backend-dependencies)
 
 
 ## Building configuration 
@@ -51,7 +53,7 @@ npm run build
 The build forder is dist.
 
 ### Backend
-#### Complete .env file
+#### Complete .env
 This project need env variable. You can use and rename .env.sample file to .env et complete it : 
 * PASSWORD=password => password to acces of the MongoDB database.
 * SECRET_KEY=key => Private key used to generate and decript the token JWT (Authentication)
@@ -93,14 +95,14 @@ Realized in June-July 2020.
 * Creation of an interactive photo novel.
 
 ## Dependencies
-### Frontend
+### Frontend Dependencies
 - [Semantic-ui](https://www.npmjs.com/package/semantic-ui-vue) - For styles.
 - [Vue-fullscreen](https://www.npmjs.com/package/vue-fullscreen) - For fullscreen mode management.
 - [Nosleep.js](https://www.npmjs.com/package/nosleep.js) - For not closed the application on mobile, during some games.
 - [Axios](https://www.npmjs.com/package/axios) - For API requests.
 - [@vimeo/player](https://www.npmjs.com/package/@vimeo/player) - For managed embeded video contents.
 
-### Backend
+### Backend Dependencies
 - [Bcrypt](https://www.npmjs.com/package/bcrypt) - For password crypting.
 - [Express](https://www.npmjs.com/package/express) - For application architecture.
 - [Jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken) - For JWT.
